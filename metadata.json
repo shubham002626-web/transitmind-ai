@@ -1,0 +1,6 @@
+{
+  "name": "TransitMind AI",
+  "description": "An AI-powered logistics intelligence platform that helps logistics companies identify transportation, cargo, and warehouse risks before they occur.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
