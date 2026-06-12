@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { Terminal, LayoutGrid, FileType2, UploadCloud, Home, MessageSquare, Lightbulb, Bell, Route, Sun, Moon, Activity } from "lucide-react";
+import { Terminal, LayoutGrid, FileType2, UploadCloud, Home, MessageSquare, Lightbulb, Bell, Route, Sun, Moon, Activity, Eye } from "lucide-react";
 
 interface HeaderProps {
   currentView: string;
@@ -132,6 +132,18 @@ export default function Header({
             }`}
           >
             BIOMETRICS
+          </button>
+
+          <button
+            id="nav-btn-godseye"
+            onClick={() => onViewChange("godseye")}
+            className={`transition-all py-5 border-b-2 hover:text-white ${
+              currentView === "godseye"
+                ? "text-white border-white font-bold"
+                : "text-white/40 border-transparent hover:border-white/20"
+            }`}
+          >
+            GOD'S EYE
           </button>
         </nav>
 
@@ -282,6 +294,13 @@ export default function Header({
         >
           <Activity className="h-4 w-4" />
           <span className="text-[8px] font-mono uppercase">Biometrics</span>
+        </button>
+        <button
+          onClick={() => onViewChange("godseye")}
+          className={`flex flex-col items-center gap-0.5 text-white/40 hover:text-white ${currentView === "godseye" ? "text-white" : ""}`}
+        >
+          <Eye className="h-4 w-4" />
+          <span className="text-[8px] font-mono uppercase">God's Eye</span>
         </button>
       </div>
     </header>

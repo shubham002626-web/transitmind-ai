@@ -34,6 +34,7 @@ import NotificationSettingsModal from "./components/NotificationSettingsModal";
 import RouteFinderModal from "./components/RouteFinderModal";
 import ProjectShowcase from "./components/ProjectShowcase";
 import DriverStressScanner from "./components/DriverStressScanner";
+import GodsEyeMatrix from "./components/GodsEyeMatrix";
 
 // Import types
 import { Report, ReportType, RiskLevel } from "./types";
@@ -419,6 +420,19 @@ export default function App() {
               transition={{ duration: 0.3 }}
             >
               <DriverStressScanner />
+            </motion.div>
+          )}
+
+          {/* View Tab 7: God's Eye Multi-Feed Surveillance Matrix */}
+          {currentView === "godseye" && (
+            <motion.div 
+              key="godseye-view"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <GodsEyeMatrix />
             </motion.div>
           )}
 
