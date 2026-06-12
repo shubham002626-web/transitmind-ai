@@ -212,7 +212,7 @@ export default function RiskAnalyzer({
           <div className="bg-[#0a0a0a] p-6 border border-white/10 space-y-4 rounded-none">
             <h2 className="font-mono text-xs font-bold text-white uppercase tracking-wider">1. Select Audit Specialty</h2>
             
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <button
                 type="button"
                 onClick={() => setSelectedType(ReportType.WAREHOUSE)}
@@ -335,7 +335,7 @@ export default function RiskAnalyzer({
             <span className="font-mono text-[9px] text-white/40 uppercase tracking-widest block">Simulation helper gallery</span>
             <h3 className="font-mono text-xs font-bold text-white uppercase tracking-wider">Or click a sample asset for instance processing</h3>
             
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {demoSamples.map((sample, idx) => (
                 <div 
                   key={idx}

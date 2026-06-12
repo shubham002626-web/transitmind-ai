@@ -61,7 +61,7 @@ export default function Header({
         </div>
 
         {/* Navigation Tabs */}
-        <nav className="hidden md:flex flex-1 overflow-x-auto whitespace-nowrap mx-6 px-2 gap-6 font-mono text-[11px] uppercase tracking-widest [&>button]:shrink-0">
+        <nav className="flex flex-1 overflow-x-auto whitespace-nowrap mx-2 md:mx-6 px-2 gap-4 md:gap-6 font-mono text-[11px] uppercase tracking-widest [&>button]:shrink-0">
           <button
             id="nav-btn-landing"
             onClick={() => onViewChange("landing")}
