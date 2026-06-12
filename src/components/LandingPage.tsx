@@ -9,9 +9,7 @@ import {
   ChevronRight, 
   Cpu, 
   Eye, 
-  MapPin, 
   PackageCheck, 
-  Power, 
   ShieldAlert, 
   ShieldCheck, 
   Truck, 
@@ -27,34 +25,40 @@ export default function LandingPage({ onGetStarted, onExploreAnalyzer }: Landing
   
   const features = [
     {
-      icon: <Eye className="h-6 w-6 text-cyan-400" />,
+      icon: <Eye className="h-5 w-5 text-white" />,
       title: "Vision-AI Auditing",
-      description: "Instantly scan cargo images, warehouse layouts, and flatbed strap strapping using advanced visual segmentation parameters."
+      description: "Instantly scan cargo images, warehouse layouts, and flatbed strap strapping using advanced visual segmentation parameters.",
+      size: "col-span-1 md:col-span-2"
     },
     {
-      icon: <ShieldAlert className="h-6 w-6 text-amber-500" />,
+      icon: <ShieldAlert className="h-5 w-5 text-white/80" />,
       title: "Real-time Risk Prediction",
-      description: "Detect buckled packaging base-layers, tilted racks, and fire egress corridor blockages before incidents disrupt the delivery chain."
+      description: "Detect buckled packaging base-layers, tilted racks, and fire egress corridor blockages.",
+      size: "col-span-1"
     },
     {
-      icon: <Cpu className="h-6 w-6 text-indigo-400" />,
+      icon: <Cpu className="h-5 w-5 text-white" />,
       title: "Gemini 3.5 Engine",
-      description: "Equipped with state-of-the-art server-side vision AI, generating expert corrective actions and immediate, secure compliance audits."
+      description: "Equipped with state-of-the-art server-side vision AI, generating expert corrective actions and immediate, secure compliance audits.",
+      size: "col-span-1"
     },
     {
-      icon: <PackageCheck className="h-6 w-6 text-emerald-400" />,
+      icon: <PackageCheck className="h-5 w-5 text-white" />,
       title: "Interactive KPI Center",
-      description: "Unified command center monitoring active warehouse efficiency, safety margins, lashing tension, and compliance score metrics."
+      description: "Unified command center monitoring active warehouse efficiency, safety margins, lashing tension, and compliance score metrics.",
+      size: "col-span-1 md:col-span-2"
     },
     {
-      icon: <Workflow className="h-6 w-6 text-teal-400" />,
+      icon: <Workflow className="h-5 w-5 text-white/80" />,
       title: "One-Click PDF Vault",
-      description: "Instantly generate enterprise-grade physical safety and warehouse layout compliance certifications to keep crews aligned."
+      description: "Instantly generate enterprise-grade physical safety and warehouse layout compliance certifications to keep crews aligned.",
+      size: "col-span-1 md:col-span-2"
     },
     {
-      icon: <Truck className="h-6 w-6 text-blue-400" />,
+      icon: <Truck className="h-5 w-5 text-white" />,
       title: "Pre-load Quality Controls",
-      description: "Verify vehicle axle weights and balanced cargo strapping orientations to comply fully with interstate transport safety."
+      description: "Verify vehicle axle weights and balanced cargo strapping orientations to comply fully with interstate transport safety.",
+      size: "col-span-1"
     }
   ];
 
@@ -80,122 +84,123 @@ export default function LandingPage({ onGetStarted, onExploreAnalyzer }: Landing
     {
       num: "01",
       title: "Snapshot Upload",
-      desc: "Upload yard photographs of pallets, packing containers, or dock aisle views via web browser or portable cameras."
+      desc: "Upload yard photographs of pallets, packing containers, or dock aisle views via web browser."
     },
     {
       num: "02",
       title: "AI Visual Inspect",
-      desc: "TransitMind visual intelligence extracts structural features, counting irregularities, and measuring spatial distances."
+      desc: "TransitMind visual intelligence extracts structural features, counting irregularities."
     },
     {
       num: "03",
       title: "Actionable Dashboard",
-      desc: "Instantly view risk levels, safety compliance metrics, anomalies detected, and targeted corrective recommendations."
+      desc: "Instantly view risk levels, safety compliance metrics, anomalies detected, and recommendations."
     },
     {
       num: "04",
       title: "Certificate Download",
-      desc: "Download signed, highly styled executive PDF reports for supply chain dispatch officers and warehouse handlers."
+      desc: "Download signed, highly styled executive PDF reports for supply chain dispatch officers."
     }
   ];
 
   return (
-    <div className="relative overflow-hidden bg-slate-950 text-slate-200 font-sans">
+    <div className="relative overflow-hidden bg-[#050505] text-[#FAFAFA] font-sans">
       
-      {/* Background Neon Gradients */}
-      <div className="absolute top-0 left-1/4 h-[500px] w-[500px] rounded-full bg-cyan-900/15 blur-[120px]"></div>
-      <div className="absolute top-[400px] right-10 h-[600px] w-[600px] rounded-full bg-indigo-950/20 blur-[150px]"></div>
-      <div className="absolute bottom-0 left-5 h-[400px] w-[400px] rounded-full bg-emerald-950/10 blur-[130px]"></div>
+      {/* Structural Wireframe Grid Lines */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#111111_1px,transparent_1px),linear-gradient(to_bottom,#111111_1px,transparent_1px)] bg-[size:5rem_5rem] pointer-events-none opacity-20" />
 
       {/* Hero Section */}
-      <section className="relative px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-28">
-        <div className="mx-auto max-w-5xl text-center">
+      <section className="relative px-6 pt-24 pb-20 max-w-7xl mx-auto border-b border-white/10">
+        <div className="text-left space-y-8">
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-950/30 px-3.5 py-1 text-xs font-medium text-cyan-400 backdrop-blur-md"
+            transition={{ duration: 0.4 }}
+            className="inline-flex items-center gap-2 border border-white/20 bg-white/5 px-3 py-1 text-xs font-mono tracking-widest text-white uppercase rounded-none"
           >
-            <ShieldCheck className="h-4 w-4" />
-            <span>ANNUAL HACKATHON DEMO STAGE</span>
+            <ShieldCheck className="h-3.5 w-3.5" />
+            <span>ANNUAL HACKATHON CORE</span>
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.15 }}
-            className="mt-6 font-display text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl text-white leading-[1.12]"
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="font-display text-4xl sm:text-6xl md:text-8xl font-black tracking-tighter text-white uppercase leading-none"
           >
-            AI-Powered Logistics Intelligence for <span className="bg-gradient-to-r from-cyan-400 via-indigo-400 to-teal-400 bg-clip-text text-transparent">Safer and Smarter</span> Operations
+            Logistics <br />
+            Intelligence Matrix
           </motion.h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="mx-auto mt-6 max-w-3xl text-sm sm:text-base text-slate-400 leading-relaxed"
-          >
-            TransitMind AI helps enterprise logistics teams identify physical transportation hazard profiles, cargo packaging defects, and warehouse spatial blockages before they derail operations. Engineered for DHL, Amazon Logistics, and Delhivery level cargo standards.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.45 }}
-            className="mt-10 flex flex-wrap justify-center gap-4"
-          >
-            <button
-              onClick={onGetStarted}
-              className="group flex items-center justify-center gap-2 rounded-lg bg-cyan-500 px-6 py-3.5 text-xs sm:text-sm font-bold text-slate-950 shadow-lg shadow-cyan-500/20 transition-all hover:scale-105 hover:shadow-cyan-500/30"
-              id="hero-cta-btn-get-started"
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pt-4">
+            <motion.p
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="md:col-span-7 text-sm sm:text-base text-white/60 leading-relaxed font-normal"
             >
-              Enter Command Center
-              <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </button>
-            <button
-              onClick={onExploreAnalyzer}
-              className="flex items-center justify-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.04] px-6 py-3.5 text-xs sm:text-sm font-semibold text-slate-300 backdrop-blur-md transition-all hover:bg-white/[0.08] hover:text-white"
-              id="hero-cta-btn-try-scanner"
+              TransitMind AI helps enterprise logistics teams identify physical transportation hazard profiles, cargo packaging defects, and warehouse spatial blockages before they derail operations. Engineered to match global container safety standards.
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="md:col-span-5 flex flex-col sm:flex-row gap-3 items-start md:justify-end"
             >
-              Analyze Live Image
-            </button>
-          </motion.div>
+              <button
+                onClick={onGetStarted}
+                className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white text-black font-mono text-xs font-bold py-4 px-8 hover:bg-white/90 active:bg-white/80 transition-all rounded-none border border-white uppercase tracking-widest"
+                id="hero-cta-btn-get-started"
+              >
+                Launch Console
+                <ChevronRight className="h-3.5 w-3.5" />
+              </button>
+              <button
+                onClick={onExploreAnalyzer}
+                className="w-full sm:w-auto flex items-center justify-center gap-2 bg-[#0c0c0c] text-white font-mono text-xs font-semibold py-4 px-8 border border-white/10 hover:border-white transition-all rounded-none uppercase tracking-widest"
+                id="hero-cta-btn-try-scanner"
+              >
+                Scan Telemetry
+              </button>
+            </motion.div>
+          </div>
 
           {/* Logistics logos simulation for enterprise feel */}
           <motion.div 
             initial={{ opacity: 0 }}
-            animate={{ opacity: 0.6 }}
-            transition={{ duration: 1.0, delay: 0.6 }}
-            className="mt-16 border-t border-white/[0.05] pt-8"
+            animate={{ opacity: 0.4 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="pt-12 border-t border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-6"
           >
-            <p className="font-mono text-[9px] uppercase tracking-widest text-slate-500">ENGINEERED FOR MULTI-MODAL GLOBALLY ACTIVE SYSTEMS</p>
-            <div className="mt-4 flex flex-wrap justify-center items-center gap-x-12 gap-y-4 font-display font-bold text-slate-600 text-sm tracking-tight">
-              <span className="hover:text-slate-500 transition-colors">DE-LIV-ERY</span>
-              <span className="hover:text-slate-500 transition-colors">BLUE DART</span>
-              <span className="hover:text-slate-500 transition-colors">F E D E X</span>
-              <span className="hover:text-slate-500 transition-colors">D H L ENTERPRISE</span>
-              <span className="hover:text-slate-500 transition-colors">AMZN LOGISTICS</span>
+            <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/40">ENGINEERED FOR MULTI-MODAL FREIGHT NETWORKS</p>
+            <div className="flex flex-wrap items-center gap-x-8 gap-y-2 font-mono text-[10px] text-white/50">
+              <span>DE-LIV-ERY</span>
+              <span>BLUE DART</span>
+              <span>F E D E X</span>
+              <span>D H L ENTERPRISE</span>
+              <span>AMZN LOGISTICS</span>
             </div>
           </motion.div>
         </div>
       </section>
 
       {/* Benefits Statistics */}
-      <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+      <section className="max-w-7xl mx-auto px-6 py-12 border-b border-white/10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {benefits.map((b, idx) => (
             <div 
               key={idx} 
-              className="glass-panel rounded-2xl p-6.5 border border-white/[0.06] text-left"
+              className="bg-[#0a0a0a] border border-white/10 p-8 text-left rounded-none relative group"
               id={`benefit-stat-card-${idx}`}
             >
-              <div className="font-display text-4xl font-extrabold tracking-tight text-white bg-gradient-to-r from-cyan-400 to-teal-400 bg-clip-text text-transparent">
+              <div className="absolute top-0 left-0 h-[2px] bg-white w-0 group-hover:w-full transition-all duration-300" />
+              <div className="text-5xl md:text-6xl font-black tracking-tighter text-white leading-none">
                 {b.metric}
               </div>
-              <div className="mt-2 font-sans text-xs font-semibold text-slate-200">
+              <div className="mt-4 font-mono text-xs font-bold uppercase tracking-wider text-white">
                 {b.label}
               </div>
-              <p className="mt-1.5 text-[11px] text-slate-400 leading-normal">
+              <p className="mt-2 text-xs text-white/60 leading-relaxed">
                 {b.detail}
               </p>
             </div>
@@ -204,73 +209,72 @@ export default function LandingPage({ onGetStarted, onExploreAnalyzer }: Landing
       </section>
 
       {/* Product Overview Section */}
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="lg:grid lg:grid-cols-12 lg:gap-12 items-center">
-          <div className="lg:col-span-5 text-left">
-            <h2 className="font-display text-2xl font-bold tracking-tight text-white sm:text-3xl">
-              Next-Generation Visual Safety Audits
+      <section className="max-w-7xl mx-auto px-6 py-20 border-b border-white/10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="lg:col-span-5 text-left space-y-6">
+            <h2 className="text-3xl font-black tracking-tight text-white uppercase leading-none">
+              Visual Safety Audits
             </h2>
-            <p className="mt-4 text-xs sm:text-sm text-slate-400 leading-relaxed">
-              Logistics companies incur massive operational losses every year due to structural container crush, falling flatbed inventory, and disorganized cargo spaces. Manual, human logs are slow and prone to oversight.
+            <p className="text-xs sm:text-sm text-white/60 leading-relaxed font-normal">
+              Logistics companies incur massive operational losses every year due to structural container crush, falling flatbed inventory, and disorganized cargo spaces. Manual checking is slow and prone to oversight.
             </p>
-            <p className="mt-3 text-xs sm:text-sm text-slate-400 leading-relaxed">
-              TransitMind AI introduces instant automated safety auditing. Deploying computer vision parameters directly onto incoming container pictures, the engine detects fractures, measures structural tilts, evaluates strap tie-down fatigue, and calculates unified Logistics Health Scores instantly.
+            <p className="text-xs sm:text-sm text-white/60 leading-relaxed font-normal">
+              TransitMind AI introduces instant automated safety auditing. Deploying computer vision parameters directly onto incoming container pictures, the engine detects fractures, measures structural tilts, evaluates strap tie-down fatigue, and calculates compliance scores instantly.
             </p>
-            <div className="mt-6 flex flex-col gap-3">
-              <div className="flex items-center gap-3 font-sans text-xs text-slate-200 font-medium">
-                <div className="flex h-5 w-5 items-center justify-center rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">✓</div>
-                <span>Automated pallet collapse verification</span>
+            <div className="space-y-3 pt-2">
+              <div className="flex items-center gap-3 font-mono text-xs text-white/80">
+                <div className="flex h-5 w-5 items-center justify-center border border-white/20 bg-white/5 font-mono text-[9px]">✓</div>
+                <span>AUTOMATED PALLET COLLAPSE DETECTION</span>
               </div>
-              <div className="flex items-center gap-3 font-sans text-xs text-slate-200 font-medium">
-                <div className="flex h-5 w-5 items-center justify-center rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">✓</div>
-                <span>Web-to-Express REST API Architecture ready</span>
+              <div className="flex items-center gap-3 font-mono text-xs text-white/80">
+                <div className="flex h-5 w-5 items-center justify-center border border-white/20 bg-white/5 font-mono text-[9px]">✓</div>
+                <span>EXPRESS REST API INTEGRITY LAYER</span>
               </div>
-              <div className="flex items-center gap-3 font-sans text-xs text-slate-200 font-medium">
-                <div className="flex h-5 w-5 items-center justify-center rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">✓</div>
-                <span>Server-side API keys completely isolated from client</span>
+              <div className="flex items-center gap-3 font-mono text-xs text-white/80">
+                <div className="flex h-5 w-5 items-center justify-center border border-white/20 bg-white/5 font-mono text-[9px]">✓</div>
+                <span>SERVER-SIDE ISOLATED ENVIRONMENT</span>
               </div>
             </div>
           </div>
           
-          <div className="mt-10 lg:mt-0 lg:col-span-7">
-            {/* Visual Glass Box Mock representing Cargo inspection */}
-            <div className="glass-panel rounded-2xl p-4.5 border border-white/[0.08] bg-slate-900/40 relative group overflow-hidden">
-              <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-cyan-500/5 to-indigo-500/10 opacity-70 blur-md group-hover:opacity-100 transition-opacity"></div>
-              <div className="relative rounded-lg bg-slate-950 p-2 overflow-hidden border border-white/[0.05]">
-                <div className="flex items-center justify-between border-b border-white/[0.05] pb-2 mb-2 font-mono text-[9px] text-slate-400">
+          <div className="lg:col-span-7">
+            {/* Visual HUD Container (Strict border, zero rounded) */}
+            <div className="bg-[#0a0a0a] p-4 border border-white/10 relative group overflow-hidden">
+              <div className="relative bg-black p-2 border border-white/5">
+                <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-2 font-mono text-[9px] text-white/40">
                   <div className="flex items-center gap-1.5">
-                    <span className="h-1.5 w-1.5 rounded-full bg-red-500 animate-pulse"></span>
+                    <span className="h-1.5 w-1.5 bg-red-500 animate-pulse"></span>
                     <span>LOGISTICS INTELLIGENCE CAPTURE MODULE #031</span>
                   </div>
                   <span>CALIBRATION: ACTIVE</span>
                 </div>
-                <div className="relative aspect-video rounded bg-slate-900 flex items-center justify-center overflow-hidden">
+                <div className="relative aspect-video flex items-center justify-center overflow-hidden bg-zinc-950">
                   <img 
                     src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80" 
                     alt="Inspection UI" 
-                    className="object-cover w-full h-full opacity-60"
+                    className="object-cover w-full h-full opacity-40 grayscale"
                   />
                   {/* Neon HUD Box Overlay */}
-                  <div className="absolute inset-0 border-2 border-red-500/40 m-6 flex flex-col justify-between p-3">
+                  <div className="absolute inset-0 border border-white/30 m-6 flex flex-col justify-between p-3">
                     <div className="flex justify-between items-start">
-                      <span className="bg-red-500 text-white font-mono text-[8px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wider">
+                      <span className="bg-white text-black font-mono text-[8px] font-bold px-1.5 py-0.5 uppercase tracking-wider">
                         CRUSHMASK #1: BUCKLING DETECTED
                       </span>
-                      <span className="font-mono text-[8px] text-red-400 bg-black/60 px-1 py-0.5 rounded">
+                      <span className="font-mono text-[8px] text-white bg-black/60 px-1 py-0.5 border border-white/10">
                         LOCATION: SEC B-4
                       </span>
                     </div>
-                    <div className="flex justify-between items-end">
-                      <span className="font-mono text-[8px] text-white/80 bg-slate-950/80 px-1.5 py-0.5 rounded">
+                    <div className="flex justify-between items-end font-mono text-[8px]">
+                      <span className="text-white/80 bg-[#0a0a0a] px-1.5 py-0.5 border border-white/5">
                         STABILITY CAPTURE: 48%
                       </span>
-                      <span className="font-mono text-[8px] text-amber-400 bg-black/60 px-1 py-0.5 rounded">
+                      <span className="text-white bg-red-950/80 border border-red-500/30 px-1 py-0.5">
                         SEVERITY: HIGH
                       </span>
                     </div>
                   </div>
                   {/* Scanner line scanning */}
-                  <div className="absolute left-0 right-0 h-0.5 bg-red-500 shadow-md shadow-red-500/50 animate-scan top-0"></div>
+                  <div className="absolute left-0 right-0 h-[1px] bg-white shadow-md shadow-white/50 animate-scan top-0"></div>
                 </div>
               </div>
             </div>
@@ -278,31 +282,32 @@ export default function LandingPage({ onGetStarted, onExploreAnalyzer }: Landing
         </div>
       </section>
 
-      {/* Features Grid */}
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 border-t border-white/[0.05]">
-        <div className="text-center">
-          <h2 className="font-display text-2xl font-bold tracking-tight text-white sm:text-3xl">
-            Comprehensive Risk Diagnostic Capabilities
+      {/* Features Bento Grid */}
+      <section className="max-w-7xl mx-auto px-6 py-20 border-b border-white/10">
+        <div className="text-left space-y-4">
+          <span className="font-mono text-xs text-white/40 tracking-widest uppercase block">
+            TECHNICAL DIRECTIVES
+          </span>
+          <h2 className="text-3xl font-black tracking-tight text-white uppercase leading-none">
+            Risk Diagnostic Capabilities
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-xs sm:text-sm text-slate-400">
-            Engineered to process physical images and convert visual features into actionable compliance directives.
-          </p>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4">
           {features.map((f, i) => (
             <div 
               key={i} 
-              className="glass-panel rounded-2xl p-6 border border-white/[0.06] hover:border-cyan-500/20 transition-all text-left group"
+              className={`${f.size} bg-[#0a0a0a] border border-white/10 p-8 transition-all hover:bg-[#121212] hover:border-white/20 text-left relative group`}
               id={`feature-grid-item-${i}`}
             >
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/[0.03] border border-white/[0.08] transition-colors group-hover:bg-cyan-950/20 group-hover:border-cyan-500/30">
+              <div className="absolute top-0 left-0 h-[2px] bg-white w-0 group-hover:w-full transition-all duration-300" />
+              <div className="flex h-10 w-10 items-center justify-center border border-white/10 bg-white/5">
                 {f.icon}
               </div>
-              <h3 className="mt-4 font-display text-sm font-semibold text-white">
+              <h3 className="mt-6 font-mono text-xs font-bold text-white uppercase tracking-wider">
                 {f.title}
               </h3>
-              <p className="mt-2 text-xs text-slate-400 leading-relaxed">
+              <p className="mt-2 text-xs text-white/60 leading-relaxed font-normal">
                 {f.description}
               </p>
             </div>
@@ -311,33 +316,31 @@ export default function LandingPage({ onGetStarted, onExploreAnalyzer }: Landing
       </section>
 
       {/* How it works layout (Timeline/Process stepper) */}
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 border-t border-white/[0.05]">
-        <div className="text-center">
-          <h2 className="font-display text-2xl font-bold tracking-tight text-white sm:text-3xl">
-            Smarter Operations in 4 Simple Steps
+      <section className="max-w-7xl mx-auto px-6 py-20 border-b border-white/10">
+        <div className="text-left space-y-4">
+          <span className="font-mono text-xs text-white/40 tracking-widest uppercase block">
+            INTEGRITY SYSTEM MANUAL
+          </span>
+          <h2 className="text-3xl font-black tracking-tight text-white uppercase leading-none">
+            Pipeline Steps
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-xs sm:text-sm text-slate-400">
-            How our AI system processes logistics risk telemetry from yard upload to dispatch clearance.
-          </p>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-4">
+        <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {steps.map((s, idx) => (
             <div 
               key={idx} 
-              className="glass-panel rounded-2xl p-5 border border-white/[0.06] text-left relative"
+              className="bg-[#0a0a0a] border border-white/10 p-6 text-left relative group"
               id={`step-[${s.num}]`}
             >
-              <span className="absolute right-4 top-4 font-display text-3xl font-extrabold text-white/[0.03]">
-                {s.num}
-              </span>
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/25 font-mono text-xs font-bold">
+              <div className="absolute top-0 left-0 h-[2px] bg-white w-0 group-hover:w-full transition-all duration-300" />
+              <div className="flex h-8 w-8 items-center justify-center border border-white/10 bg-white/5 font-mono text-xs font-bold text-white">
                 {s.num}
               </div>
-              <h3 className="mt-4 font-display text-xs font-bold text-white tracking-wide uppercase">
+              <h3 className="mt-6 font-mono text-xs font-bold text-white tracking-wider uppercase">
                 {s.title}
               </h3>
-              <p className="mt-2 text-[11px] text-slate-400 leading-relaxed">
+              <p className="mt-2 text-xs text-white/60 leading-relaxed">
                 {s.desc}
               </p>
             </div>
@@ -346,21 +349,19 @@ export default function LandingPage({ onGetStarted, onExploreAnalyzer }: Landing
       </section>
 
       {/* Call to action section */}
-      <section className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="relative rounded-3xl overflow-hidden bg-gradient-to-tr from-cyan-950 via-slate-900 to-indigo-950 px-6 py-12 text-center border border-cyan-500/20 shadow-2xl">
-          <div className="absolute top-0 right-0 h-40 w-40 rounded-full bg-cyan-500/10 blur-xl"></div>
-          <div className="absolute bottom-0 left-0 h-40 w-40 rounded-full bg-indigo-500/10 blur-xl"></div>
-          
-          <h2 className="font-display text-2xl font-bold text-white sm:text-3xl">
-            Ready to secure your Logistics Chain?
+      <section className="max-w-5xl mx-auto px-6 py-20">
+        <div className="bg-[#0a0a0a] p-12 text-left border border-white/10 relative group overflow-hidden">
+          <div className="absolute top-0 left-0 h-[2px] bg-white w-0 group-hover:w-full transition-all duration-300" />
+          <h2 className="text-3xl font-black text-white uppercase leading-none">
+            Secure Logistics Operations
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-xs sm:text-sm text-slate-400">
-            Differentiate your operations tonight. Enter our glassmorphic Command Center console to run a real-time risk diagnostic or submit sample images.
+          <p className="mt-4 text-xs sm:text-sm text-white/60 max-w-xl leading-relaxed">
+            Differentiate your operations tonight. Enter our Command Center console to run a real-time risk diagnostic or submit sample images.
           </p>
-          <div className="mt-8 flex justify-center gap-4">
+          <div className="mt-8">
             <button
               onClick={onGetStarted}
-              className="rounded-lg bg-cyan-500 px-6 py-3 text-xs font-bold text-slate-950 shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/30 transition-shadow"
+              className="w-full sm:w-auto bg-white text-black font-mono text-xs font-bold py-4 px-8 hover:bg-white/90 transition-all rounded-none uppercase tracking-widest border border-white"
               id="cta-active-command-button"
             >
               Launch Command Center
@@ -370,11 +371,11 @@ export default function LandingPage({ onGetStarted, onExploreAnalyzer }: Landing
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-white/[0.05] bg-slate-950 py-10 text-slate-500">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6 text-xs font-mono">
+      <footer className="border-t border-white/10 bg-black py-12 text-white/40">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-6 text-xs font-mono">
           <div className="flex items-center gap-2">
-            <Building2 className="h-4 w-4 text-cyan-500" />
-            <span className="text-slate-400 font-semibold font-display">TransitMind AI</span>
+            <Building2 className="h-4 w-4 text-white" />
+            <span className="text-white font-semibold">TransitMind AI</span>
             <span>© 2026. Global Logistics Compliance Framework.</span>
           </div>
           <div className="flex gap-4">

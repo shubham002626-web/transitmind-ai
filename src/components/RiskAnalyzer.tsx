@@ -10,19 +10,16 @@ import {
   Image as ImageIcon, 
   AlertTriangle, 
   CheckCircle2, 
-  Terminal, 
   RefreshCw, 
   ShieldCheck, 
   Building, 
   Truck, 
   Cpu, 
   Download,
-  Flame,
   XSquare,
-  Wrench,
   Gauge
 } from "lucide-react";
-import { Report, ReportType, RiskLevel } from "../types";
+import { Report, ReportType } from "../types";
 import { AIService } from "../services/aiService";
 
 interface RiskAnalyzerProps {
@@ -91,19 +88,18 @@ export default function RiskAnalyzer({
         currentProgress = 95;
       }
       setProgress(currentProgress);
-    }, 150);
+    }, 120);
     
     try {
-      // Simulate pipeline delays for tactile, visual tech audit experience
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise(resolve => setTimeout(resolve, 800));
       setAnalyzingState("scanning");
       setAnalyzingStage("Evaluating visual edges & container stress masks...");
       
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await new Promise(resolve => setTimeout(resolve, 1200));
       setAnalyzingState("saving");
       setAnalyzingStage("Synthesizing actionable warehouse hazard directives...");
       
-      await new Promise(resolve => setTimeout(resolve, 800));
+      await new Promise(resolve => setTimeout(resolve, 600));
 
       const resultReport = await AIService.analyzeImage({
         imageName: nameStr,
@@ -119,7 +115,7 @@ export default function RiskAnalyzer({
         setAnalyzedReport(resultReport);
         onAnalysisSuccess(resultReport);
         setAnalyzingState("complete");
-      }, 400);
+      }, 300);
 
     } catch (e) {
       clearInterval(progressInterval);
@@ -129,7 +125,6 @@ export default function RiskAnalyzer({
     }
   };
 
-  // Handle manual file selections
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -175,34 +170,34 @@ export default function RiskAnalyzer({
     }
   };
 
-  const getRiskGradientAndColor = (level: string) => {
+  const getRiskColor = (level: string) => {
     switch (level) {
-      case "HIGH": return "from-red-500/10 to-rose-500/5 border-red-500/30 text-rose-400";
-      case "MEDIUM": return "from-amber-500/10 to-yellow-500/5 border-amber-500/30 text-amber-400";
-      case "LOW": return "from-emerald-500/10 to-teal-500/5 border-emerald-500/30 text-emerald-400";
-      default: return "from-slate-900 to-slate-950 border-white/[0.08] text-slate-400";
+      case "HIGH": return "text-red-400 bg-red-950/20 border-red-500/20";
+      case "MEDIUM": return "text-amber-400 bg-amber-950/20 border-amber-500/20";
+      case "LOW": return "text-emerald-400 bg-emerald-950/20 border-emerald-500/20";
+      default: return "text-white/60 bg-[#0a0a0a] border-white/10";
     }
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 text-left">
+    <div className="mx-auto max-w-7xl px-6 py-12 text-left space-y-8">
       
       {/* Title */}
-      <div className="border-b border-white/[0.08] pb-6 mb-8 flex justify-between items-start flex-wrap gap-4">
+      <div className="border-b border-white/10 pb-6 flex justify-between items-start flex-wrap gap-4">
         <div>
-          <h1 className="font-display text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-            <Cpu className="h-5.5 w-5.5 text-cyan-500 animate-pulse" />
-            AI Compliance & Risk Scanner
+          <h1 className="font-display text-2xl font-black tracking-tight text-white uppercase flex items-center gap-2">
+            <Cpu className="h-5.5 w-5.5 text-white" />
+            Compliance & Risk Scanner
           </h1>
-          <p className="font-sans text-xs text-slate-400 mt-1">
+          <p className="font-sans text-xs text-white/60 mt-1">
             Submit photographic evidence to detect packaging compression buckles, egress blocks, and balanced lashing.
           </p>
         </div>
         
         {/* Connection status display */}
-        <div className="flex items-center gap-2 rounded-xl bg-slate-950 px-3.5 py-1.5 border border-white/[0.05]">
-          <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span className="font-mono text-[9px] text-slate-400 uppercase">
+        <div className="flex items-center gap-2 bg-[#0a0a0a] px-4 py-2 border border-white/10 rounded-none">
+          <span className="h-1.5 w-1.5 bg-white"></span>
+          <span className="font-mono text-[9px] text-white/60 uppercase">
             {mockMode ? "STANDBY: HIGH-FIDELITY SIMULATION" : "READY: GEMINI MULTI-MODAL MODEL"}
           </span>
         </div>
@@ -214,46 +209,46 @@ export default function RiskAnalyzer({
         <div className="lg:col-span-6 space-y-6">
           
           {/* Form settings */}
-          <div className="glass-panel rounded-2xl p-5.5 border border-white/[0.06] space-y-4">
-            <h2 className="font-display font-semibold text-white text-sm">1. Select Audit Specialty</h2>
+          <div className="bg-[#0a0a0a] p-6 border border-white/10 space-y-4 rounded-none">
+            <h2 className="font-mono text-xs font-bold text-white uppercase tracking-wider">1. Select Audit Specialty</h2>
             
             <div className="grid grid-cols-3 gap-3">
               <button
                 type="button"
                 onClick={() => setSelectedType(ReportType.WAREHOUSE)}
-                className={`flex flex-col items-center justify-center py-3.5 px-2 rounded-xl border font-sans text-xs font-semibold tracking-wide transition-all ${
+                className={`flex flex-col items-center justify-center py-4 px-2 border font-mono text-[10px] font-bold tracking-widest uppercase transition-all rounded-none ${
                   selectedType === ReportType.WAREHOUSE
-                    ? "bg-cyan-500/10 border-cyan-400 text-cyan-400 shadow-lg shadow-cyan-500/5"
-                    : "bg-white/[0.02] border-white/[0.06] text-slate-400 hover:text-white hover:bg-white/[0.04]"
+                    ? "bg-white text-black border-white"
+                    : "bg-[#050505] border-white/10 text-white/60 hover:text-white hover:border-white/30"
                 }`}
               >
-                <Building className="h-4.5 w-4.5 mb-1.5" />
+                <Building className="h-4 w-4 mb-2" />
                 Warehouse
               </button>
               
               <button
                 type="button"
                 onClick={() => setSelectedType(ReportType.CARGO)}
-                className={`flex flex-col items-center justify-center py-3.5 px-2 rounded-xl border font-sans text-xs font-semibold tracking-wide transition-all ${
+                className={`flex flex-col items-center justify-center py-4 px-2 border font-mono text-[10px] font-bold tracking-widest uppercase transition-all rounded-none ${
                   selectedType === ReportType.CARGO
-                    ? "bg-cyan-500/10 border-cyan-400 text-cyan-400 shadow-lg shadow-cyan-500/5"
-                    : "bg-white/[0.02] border-white/[0.06] text-slate-400 hover:text-white hover:bg-white/[0.04]"
+                    ? "bg-white text-black border-white"
+                    : "bg-[#050505] border-white/10 text-white/60 hover:text-white hover:border-white/30"
                 }`}
               >
-                <ImageIcon className="h-4.5 w-4.5 mb-1.5" />
-                Cargo Damage
+                <ImageIcon className="h-4 w-4 mb-2" />
+                Cargo Deck
               </button>
 
               <button
                 type="button"
                 onClick={() => setSelectedType(ReportType.LOADING)}
-                className={`flex flex-col items-center justify-center py-3.5 px-2 rounded-xl border font-sans text-xs font-semibold tracking-wide transition-all ${
+                className={`flex flex-col items-center justify-center py-4 px-2 border font-mono text-[10px] font-bold tracking-widest uppercase transition-all rounded-none ${
                   selectedType === ReportType.LOADING
-                    ? "bg-cyan-500/10 border-cyan-400 text-cyan-400 shadow-lg shadow-cyan-500/5"
-                    : "bg-white/[0.02] border-white/[0.06] text-slate-400 hover:text-white hover:bg-white/[0.04]"
+                    ? "bg-white text-black border-white"
+                    : "bg-[#050505] border-white/10 text-white/60 hover:text-white hover:border-white/30"
                 }`}
               >
-                <Truck className="h-4.5 w-4.5 mb-1.5" />
+                <Truck className="h-4 w-4 mb-2" />
                 Load Security
               </button>
             </div>
@@ -261,17 +256,17 @@ export default function RiskAnalyzer({
 
           {/* Interactive Drag & Drop Area */}
           <div 
-            className={`bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border-2 border-dashed rounded-2xl p-6.5 transition-all text-center flex flex-col items-center justify-center relative cursor-pointer group hover:border-cyan-400 ${
-              isDragOver ? "border-cyan-400 bg-cyan-500/20" : "border-cyan-500/30"
+            className={`bg-[#0a0a0a] border border-dashed p-8 transition-all text-center flex flex-col items-center justify-center relative cursor-pointer group rounded-none ${
+              isDragOver ? "border-white bg-white/5" : "border-white/20"
             }`}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
           >
             {imageUrl ? (
-              <div className="w-full relative group">
+              <div className="w-full relative">
                 {/* Selected File Details */}
-                <div className="absolute top-2 right-2 z-10 flex gap-2">
+                <div className="absolute top-2 right-2 z-10">
                   <button
                     onClick={() => {
                       setImageUrl("");
@@ -280,48 +275,48 @@ export default function RiskAnalyzer({
                       setAnalyzingState("idle");
                       setProgress(0);
                     }}
-                    className="p-1.5 bg-black/75 hover:bg-red-600 rounded-lg text-slate-300 hover:text-white transition-colors"
+                    className="p-2 bg-black border border-white/10 hover:bg-white hover:text-black transition-colors rounded-none text-white font-mono text-[9px] flex items-center gap-1 uppercase"
                     title="Remove Image"
                     id="remove-uploaded-image-btn"
                   >
-                    <XSquare className="h-4.5 w-4.5" />
+                    <XSquare className="h-3.5 w-3.5" /> REMOVE
                   </button>
                 </div>
 
-                <div className="relative aspect-video rounded-lg overflow-hidden border border-white/[0.06] bg-slate-900">
+                <div className="relative aspect-video overflow-hidden border border-white/5 bg-[#050505] rounded-none">
                   <img 
                     src={imageUrl} 
                     alt="Inspection target" 
-                    className="object-contain w-full h-full"
+                    className="object-contain w-full h-full grayscale opacity-80"
                   />
                   {analyzingState === "scanning" && (
                     <>
-                      <div className="absolute inset-0 bg-cyan-500/15 animate-pulse"></div>
-                      <div className="absolute left-0 right-0 h-0.5 bg-cyan-400 shadow-[0_0_8px_cyan] animate-scan top-0"></div>
+                      <div className="absolute inset-0 bg-white/5 animate-pulse"></div>
+                      <div className="absolute left-0 right-0 h-[1px] bg-white shadow-md shadow-white/50 animate-scan top-0"></div>
                     </>
                   )}
                 </div>
 
-                <div className="mt-4 flex items-center justify-between font-mono text-[10px] text-slate-400 uppercase bg-black/40 p-2.5 rounded-lg border border-white/[0.04]">
+                <div className="mt-4 flex items-center justify-between font-mono text-[9px] text-white/40 uppercase bg-[#050505] p-3 border border-white/5 rounded-none">
                   <span className="truncate pr-4" title={imageName}>{imageName}</span>
-                  <span className="shrink-0 text-cyan-400">TARGET ACQUIRED</span>
+                  <span className="text-white font-bold">TARGET ACQUIRED</span>
                 </div>
               </div>
             ) : (
-              <div className="py-8">
-                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-white/[0.04] border border-white/[0.08] text-cyan-400">
-                  <Upload className="h-6 w-6" />
+              <div className="py-10 space-y-4">
+                <div className="mx-auto flex h-10 w-10 items-center justify-center border border-white/10 bg-white/5 text-white">
+                  <Upload className="h-5 w-5" />
                 </div>
-                <div className="mt-4 text-xs font-semibold text-white">Drag & Drop inspection snap, or</div>
+                <div className="text-xs font-semibold text-white">Drag & Drop inspection snap, or</div>
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="mt-2 text-xs font-bold text-cyan-400 hover:text-white decoration-dotted underline"
+                  className="text-xs font-bold text-white hover:underline decoration-solid underline-offset-4 font-mono uppercase tracking-widest"
                   id="trigger-file-select-btn"
                 >
-                  browse workspace folders
+                  browse files
                 </button>
-                <p className="mt-2.5 text-[10px] text-slate-500">
+                <p className="text-[10px] text-white/40 font-mono uppercase">
                   PNG, JPEG patterns, or base-64 camera uploads are compliant.
                 </p>
                 <input 
@@ -336,29 +331,29 @@ export default function RiskAnalyzer({
           </div>
 
           {/* Quick Click Simulation Gallery */}
-          <div className="glass-panel rounded-2xl p-5 border border-white/[0.06]">
-            <span className="font-mono text-[10px] text-slate-500 uppercase tracking-widest block">Simulation helper gallery</span>
-            <h3 className="font-display font-semibold text-white text-xs mt-1">Or click a sample asset for instance processing</h3>
+          <div className="bg-[#0a0a0a] p-6 border border-white/10 space-y-4 rounded-none">
+            <span className="font-mono text-[9px] text-white/40 uppercase tracking-widest block">Simulation helper gallery</span>
+            <h3 className="font-mono text-xs font-bold text-white uppercase tracking-wider">Or click a sample asset for instance processing</h3>
             
-            <div className="grid grid-cols-3 gap-2.5 mt-3.5">
+            <div className="grid grid-cols-3 gap-3">
               {demoSamples.map((sample, idx) => (
                 <div 
                   key={idx}
                   onClick={() => handleSelectSample(sample)}
-                  className="cursor-pointer group flex flex-col rounded-lg overflow-hidden border border-white/[0.06] bg-slate-900/60 hover:border-cyan-500/30 transition-all"
+                  className="cursor-pointer group flex flex-col border border-white/10 bg-[#050505] hover:border-white transition-colors rounded-none"
                   id={`demo-sample-action-${idx}`}
                 >
-                  <div className="aspect-video bg-slate-800 overflow-hidden relative">
+                  <div className="aspect-video bg-black overflow-hidden relative">
                     <img 
                       src={sample.url} 
                       alt={sample.title} 
-                      className="object-cover w-full h-full opacity-60 group-hover:scale-105 transition-transform" 
+                      className="object-cover w-full h-full opacity-40 grayscale group-hover:opacity-80 transition-opacity" 
                     />
-                    <span className="absolute bottom-1 right-1 font-mono text-[8px] bg-black/70 px-1 py-0.2 rounded text-slate-400 uppercase">
+                    <span className="absolute bottom-1 right-1 font-mono text-[7px] bg-black px-1.5 py-0.5 border border-white/10 text-white/60 uppercase">
                       {sample.type.split("_")[0]}
                     </span>
                   </div>
-                  <div className="p-2 text-[10px] font-sans font-medium text-slate-300 group-hover:text-cyan-400 truncate text-center">
+                  <div className="p-2 text-[9px] font-mono font-bold text-white/50 group-hover:text-white uppercase truncate text-center">
                     {sample.title}
                   </div>
                 </div>
@@ -371,23 +366,23 @@ export default function RiskAnalyzer({
             <button
               onClick={() => processAnalysis(imageUrl, imageName, selectedType)}
               disabled={!imageUrl || analyzingState !== "idle"}
-              className={`w-full py-3.5 rounded-lg text-xs font-bold tracking-wide flex items-center justify-center gap-2 transition-all ${
+              className={`w-full py-4 text-xs font-bold tracking-widest flex items-center justify-center gap-2 transition-colors rounded-none uppercase font-mono border ${
                 !imageUrl 
-                  ? "bg-slate-800 text-slate-500 border border-white/5 cursor-not-allowed" 
+                  ? "bg-[#0a0a0a] text-white/20 border-white/5 cursor-not-allowed" 
                   : analyzingState !== "idle"
-                    ? "bg-cyan-950/40 text-cyan-400 border border-cyan-400/20 cursor-wait"
-                    : "bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-lg shadow-cyan-500/20 cursor-pointer"
+                    ? "bg-[#0a0a0a] text-white/40 border-white/20 cursor-wait animate-pulse"
+                    : "bg-white text-black border-white hover:bg-black hover:text-white cursor-pointer"
               }`}
               id="execute-ai-analysis-btn"
             >
               {analyzingState !== "idle" ? (
                 <>
-                  <RefreshCw className="h-4.5 w-4.5 animate-spin" />
-                  <span className="font-mono text-[10px] uppercase">{analyzingStage}</span>
+                  <RefreshCw className="h-4 w-4 animate-spin" />
+                  <span>{analyzingStage}</span>
                 </>
               ) : (
                 <>
-                  <Cpu className="h-4.5 w-4.5" />
+                  <Cpu className="h-4 w-4" />
                   <span>LAUNCH VISUAL HARNESS SCAN</span>
                 </>
               )}
@@ -400,40 +395,38 @@ export default function RiskAnalyzer({
         <div className="lg:col-span-6">
           {analyzingState !== "idle" && analyzingState !== "complete" ? (
             /* Analyzing Visual Stage */
-            <div className="glass-panel rounded-2xl border border-white/[0.06] p-10 flex flex-col items-center justify-center text-center h-full min-h-[400px]">
-              <div className="relative flex justify-center items-center h-20 w-20 mb-6">
-                {/* Spinning nested loader */}
-                <div className="absolute inset-0 rounded-full border-2 border-slate-900"></div>
-                <div className="absolute inset-0 rounded-full border-2 border-cyan-500 border-t-transparent animate-spin"></div>
-                <div className="absolute h-10 w-10 rounded-full border-2 border-indigo-400 border-b-transparent animate-spin [animation-direction:reverse]"></div>
-                <Cpu className="h-6 w-6 text-cyan-400" />
+            <div className="bg-[#0a0a0a] border border-white/10 p-10 flex flex-col items-center justify-center text-center h-full min-h-[400px] rounded-none">
+              <div className="relative flex justify-center items-center h-16 w-16 mb-6">
+                <div className="absolute inset-0 rounded-none border border-white/10"></div>
+                <div className="absolute inset-0 rounded-none border border-white border-t-transparent animate-spin"></div>
+                <Cpu className="h-5 w-5 text-white" />
               </div>
-              <h3 className="font-display text-sm font-semibold text-white uppercase tracking-wider">
+              <h3 className="font-mono text-xs font-bold text-white uppercase tracking-wider">
                 TransitMind AI Processing
               </h3>
-              <p className="font-sans text-xs text-slate-400 mt-2 max-w-sm">
+              <p className="font-sans text-xs text-white/60 mt-2 max-w-xs leading-relaxed">
                 Deploying image parsing algorithms, safety score matrix counters, and recommendation logic pipeline...
               </p>
               
               {/* Progress Bar */}
-              <div className="w-full max-w-md mt-6">
-                <div className="flex justify-between items-end mb-1.5 px-1">
-                  <span className="text-[10px] text-cyan-400 font-mono uppercase tracking-wider">SYSTEM LOAD</span>
-                  <span className="text-xs font-mono text-white font-bold">{progress}%</span>
+              <div className="w-full max-w-sm mt-8">
+                <div className="flex justify-between items-end mb-1.5 px-1 font-mono text-[9px] uppercase">
+                  <span className="text-white/40">SYSTEM LOAD</span>
+                  <span className="text-white font-bold">{progress}%</span>
                 </div>
-                <div className="h-1.5 w-full bg-slate-900 rounded-full overflow-hidden border border-white/5">
+                <div className="h-2 w-full bg-[#050505] border border-white/10 rounded-none overflow-hidden">
                   <motion.div 
                     initial={{ width: 0 }}
                     animate={{ width: `${progress}%` }}
-                    transition={{ ease: "linear", duration: 0.15 }}
-                    className="h-full bg-gradient-to-r from-cyan-500 to-indigo-500 shadow-[0_0_10px_rgba(34,211,238,0.5)]"
+                    transition={{ ease: "linear", duration: 0.1 }}
+                    className="h-full bg-white"
                   ></motion.div>
                 </div>
               </div>
 
               {/* Animated terminal lines list */}
-              <div className="mt-6 p-4 rounded-xl bg-black/60 border border-white/[0.04] w-full max-w-md text-left font-mono text-[10px] space-y-1 text-slate-500">
-                <div className="text-cyan-500 font-semibold">&gt; {analyzingStage}</div>
+              <div className="mt-8 p-4 bg-[#050505] border border-white/5 w-full max-w-sm text-left font-mono text-[9px] space-y-1.5 text-white/40">
+                <div className="text-white font-bold">&gt; {analyzingStage}</div>
                 <div>&gt; pipeline configuration verified: OK</div>
                 <div>&gt; safety score gauge thresholds set: OK</div>
                 <div>&gt; server socket feedback pipeline: STANDBY</div>
@@ -444,20 +437,20 @@ export default function RiskAnalyzer({
             <div className="space-y-6">
               
               {/* Safety Agent Card + Warehouse Intelligence Card combo block */}
-              <div className={`glass-panel border-l-4 rounded-2xl p-6 border ${getRiskGradientAndColor(analyzedReport.riskLevel)}`}>
+              <div className={`bg-[#0a0a0a] border p-6 rounded-none ${getRiskColor(analyzedReport.riskLevel)}`}>
                 <div className="flex justify-between items-start flex-wrap gap-2">
                   <div>
-                    <span className="font-mono text-[10px] text-cyan-400 block uppercase tracking-wider">
+                    <span className="font-mono text-[9px] text-white/50 block uppercase tracking-wider">
                       {analyzedReport.type} COMPLIANCE CERTIFICATE
                     </span>
-                    <h2 className="font-display font-bold text-white text-base mt-1">{analyzedReport.title}</h2>
-                    <span className="font-mono text-[9px] text-slate-400 block mt-0.5">COMPILED: {analyzedReport.uploadDate}</span>
+                    <h2 className="font-mono text-base font-bold text-white mt-2 uppercase tracking-tight">{analyzedReport.title}</h2>
+                    <span className="font-mono text-[9px] text-white/40 block mt-1">COMPILED: {analyzedReport.uploadDate}</span>
                   </div>
                   
                   {/* Action download */}
                   <button
                     onClick={() => onDownloadPDF(analyzedReport)}
-                    className="rounded-lg bg-white/[0.03] border border-white/[0.08] p-2 hover:bg-white/[0.08] text-cyan-400 hover:text-white transition-colors"
+                    className="bg-[#050505] border border-white/10 p-2 hover:bg-white hover:text-black transition-colors rounded-none text-white"
                     title="Export PDF Report"
                     id="export-scanned-pdf-btn"
                   >
@@ -465,33 +458,33 @@ export default function RiskAnalyzer({
                   </button>
                 </div>
 
-                <div className="mt-4 p-3.5 rounded-lg bg-black/40 border border-white/[0.04]">
-                  <span className="font-mono text-[10px] text-slate-500 uppercase tracking-widest block">Executive visual audit summary</span>
-                  <p className="font-sans text-[11px] text-slate-300 leading-relaxed mt-1">{analyzedReport.executiveSummary}</p>
+                <div className="mt-4 p-4 bg-[#050505] border border-white/5 rounded-none text-left">
+                  <span className="font-mono text-[9px] text-white/40 uppercase tracking-widest block">Executive visual audit summary</span>
+                  <p className="font-sans text-[11px] text-white/80 leading-relaxed mt-2">{analyzedReport.executiveSummary}</p>
                 </div>
               </div>
 
               {/* Module Cards Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 
                 {/* Core Module 1: Safety Agent Card */}
-                <div className="glass-panel rounded-2xl p-5 border border-white/[0.06] flex flex-col justify-between">
+                <div className="bg-[#0a0a0a] border border-white/10 p-5 flex flex-col justify-between rounded-none text-left">
                   <div>
-                    <div className="flex items-center justify-between border-b border-white/[0.04] pb-2 mb-3">
-                      <h3 className="font-mono text-[10px] font-bold text-slate-400 uppercase tracking-wide flex items-center gap-1">
-                        <ShieldCheck className="h-4 w-4 text-emerald-400" />
-                        Safety Agent Audit
+                    <div className="flex items-center justify-between border-b border-white/10 pb-2.5 mb-3 font-mono">
+                      <h3 className="text-[10px] font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
+                        <ShieldCheck className="h-4 w-4 text-white/60" />
+                        Safety Agent
                       </h3>
                       <div className="text-right">
-                        <div className="text-xs font-semibold text-slate-500">SAFETY</div>
-                        <div className="text-sm font-bold text-emerald-400 leading-none">{analyzedReport.safetyScore}/100</div>
+                        <div className="text-[9px] text-white/40 uppercase">SAFETY</div>
+                        <div className="text-xs font-bold text-white leading-none">{analyzedReport.safetyScore}/100</div>
                       </div>
                     </div>
 
-                    <div className="space-y-3 font-sans text-xs">
+                    <div className="space-y-3 font-mono text-[10px]">
                       <div>
-                        <span className="text-[10px] text-slate-500 block">DAMAGE EVALUATION</span>
-                        <p className="text-slate-300 text-[11px] mt-0.5 leading-normal">
+                        <span className="text-white/40 block uppercase">DAMAGE EVALUATION</span>
+                        <p className="text-white/80 mt-1 leading-relaxed">
                           {analyzedReport.issues.length > 0 
                             ? "Punctures / structural collapses localized. Packaging index degraded."
                             : "No packing outer tears, compression buckles, or seal cracks found."}
@@ -499,8 +492,8 @@ export default function RiskAnalyzer({
                       </div>
 
                       <div>
-                        <span className="text-[10px] text-slate-500 block">STACKING INTEGRITY</span>
-                        <p className="text-slate-300 text-[11px] mt-0.5 leading-normal">
+                        <span className="text-white/40 block uppercase">STACKING INTEGRITY</span>
+                        <p className="text-white/80 mt-1 leading-relaxed">
                           {analyzedReport.type === ReportType.CARGO 
                             ? "Priority stack tilt triggers. Critical weights exceed bounds."
                             : "Axle balance guidelines are verified. Solid stack column spacing."}
@@ -509,33 +502,33 @@ export default function RiskAnalyzer({
                     </div>
                   </div>
 
-                  <div className="border-t border-white/[0.04] pt-3 mt-4">
-                    <span className="font-mono text-[9px] text-slate-500 uppercase">SAFETY ACTION PLAN</span>
-                    <ul className="text-[10px] text-slate-300 mt-1 list-disc list-inside space-y-1">
-                      <li>Use vehicle heavy tie-downs</li>
-                      <li>Re-stack and box packaging bases</li>
+                  <div className="border-t border-white/10 pt-3 mt-4 font-mono">
+                    <span className="text-[9px] text-white/40 uppercase">SAFETY ACTION PLAN</span>
+                    <ul className="text-[10px] text-white/80 mt-1.5 list-disc list-inside space-y-1">
+                      <li>Use heavy tie-downs</li>
+                      <li>Re-stack and box bases</li>
                     </ul>
                   </div>
                 </div>
 
                 {/* Core Module 2: Warehouse Intelligence Card */}
-                <div className="glass-panel rounded-2xl p-5 border border-white/[0.06] flex flex-col justify-between">
+                <div className="bg-[#0a0a0a] border border-white/10 p-5 flex flex-col justify-between rounded-none text-left">
                   <div>
-                    <div className="flex items-center justify-between border-b border-white/[0.04] pb-2 mb-3">
-                      <h3 className="font-mono text-[10px] font-bold text-slate-400 uppercase tracking-wide flex items-center gap-1">
-                        <Building className="h-4 w-4 text-indigo-400" />
-                        Warehouse Intelligence
+                    <div className="flex items-center justify-between border-b border-white/10 pb-2.5 mb-3 font-mono">
+                      <h3 className="text-[10px] font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
+                        <Building className="h-4 w-4 text-white/60" />
+                        Warehouse Intel
                       </h3>
                       <div className="text-right">
-                        <div className="text-xs font-semibold text-slate-500">EFFICIENCY</div>
-                        <div className="text-sm font-bold text-indigo-400 leading-none">{analyzedReport.warehouseScore}/100</div>
+                        <div className="text-[9px] text-white/40 uppercase">EFFICIENCY</div>
+                        <div className="text-xs font-bold text-white leading-none">{analyzedReport.warehouseScore}/100</div>
                       </div>
                     </div>
 
-                    <div className="space-y-3 font-sans text-xs">
+                    <div className="space-y-3 font-mono text-[10px]">
                       <div>
-                        <span className="text-[10px] text-slate-500 block">CONGESTION INDEX</span>
-                        <p className="text-slate-300 text-[11px] mt-0.5 leading-normal">
+                        <span className="text-white/40 block uppercase">CONGESTION INDEX</span>
+                        <p className="text-white/80 mt-1 leading-relaxed">
                           {analyzedReport.type === ReportType.WAREHOUSE
                             ? "Active access blocks located near zone G exit doors."
                             : "Stable material floor footprints. Movement channels clear."}
@@ -543,21 +536,21 @@ export default function RiskAnalyzer({
                       </div>
 
                       <div>
-                        <span className="text-[10px] text-slate-500 block">PATHWAY ACCESSIBILITY</span>
-                        <p className="text-slate-300 text-[11px] mt-0.5 leading-normal">
+                        <span className="text-white/40 block uppercase">PATHWAY STATUS</span>
+                        <p className="text-white/80 mt-1 leading-relaxed">
                           {analyzedReport.type === ReportType.WAREHOUSE
-                            ? "Heavy floor pallet placement blocks path clearances."
+                            ? "Pallet placement blocks corridor clearances."
                             : "All emergency egress doors and fire lanes verify safe."}
                         </p>
                       </div>
                     </div>
                   </div>
 
-                  <div className="border-t border-white/[0.04] pt-3 mt-4">
-                    <span className="font-mono text-[9px] text-slate-500 uppercase">YARD FLOW OPTIMIZATIONS</span>
-                    <ul className="text-[10px] text-slate-300 mt-1 list-disc list-inside space-y-1">
+                  <div className="border-t border-white/10 pt-3 mt-4 font-mono">
+                    <span className="text-[9px] text-white/40 uppercase">YARD FLOW DIRECTIONS</span>
+                    <ul className="text-[10px] text-white/80 mt-1.5 list-disc list-inside space-y-1">
                       <li>Clear main exit lane corridor</li>
-                      <li>Instate paint markings for safety</li>
+                      <li>Instate paint safety markings</li>
                     </ul>
                   </div>
                 </div>
@@ -565,12 +558,12 @@ export default function RiskAnalyzer({
               </div>
 
               {/* Corrective Recommendations Cards list */}
-              <div className="glass-panel rounded-2xl p-5 border border-white/[0.06]">
-                <span className="font-mono text-[10px] text-cyan-400 uppercase tracking-wider block">Final Action Items</span>
-                <div className="mt-3.5 space-y-2.5">
+              <div className="bg-[#0a0a0a] border border-white/10 p-5 rounded-none text-left">
+                <span className="font-mono text-[10px] text-white uppercase tracking-wider block">Final Action Items</span>
+                <div className="mt-4 space-y-2">
                   {analyzedReport.recommendations.map((rec, index) => (
-                    <div key={index} className="flex gap-3 bg-white/[0.01] border border-white/[0.04] p-3 rounded-lg text-slate-300 text-xs leading-normal items-start">
-                      <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/10 font-mono text-[9px] font-bold">
+                    <div key={index} className="flex gap-3 bg-[#050505] border border-white/5 p-3 rounded-none text-white/80 font-mono text-[10px] leading-relaxed items-start">
+                      <div className="flex h-5 w-5 shrink-0 items-center justify-center border border-white/20 bg-white/5 font-mono text-[9px] font-bold text-white">
                         {index + 1}
                       </div>
                       <p>{rec}</p>
@@ -582,23 +575,23 @@ export default function RiskAnalyzer({
             </div>
           ) : (
             /* Idle Screen placeholder instructions */
-            <div className="glass-panel rounded-2xl border border-white/[0.06] p-10 flex flex-col items-center justify-center text-center h-full min-h-[400px]">
-              <div className="h-14 w-14 rounded-full bg-cyan-500/5 border border-cyan-500/10 flex items-center justify-center text-cyan-400 mb-4 animate-pulse">
-                <Gauge className="h-7 w-7" />
+            <div className="bg-[#0a0a0a] border border-white/10 p-10 flex flex-col items-center justify-center text-center h-full min-h-[400px] rounded-none">
+              <div className="h-12 w-12 border border-white/15 bg-white/5 flex items-center justify-center text-white mb-4">
+                <Gauge className="h-5 w-5" />
               </div>
-              <h3 className="font-display text-sm font-semibold text-white">Analysis Results Preview</h3>
-              <p className="font-sans text-xs text-slate-400 mt-2 max-w-sm leading-relaxed">
+              <h3 className="font-mono text-xs font-bold text-white uppercase tracking-wider">Analysis Results Preview</h3>
+              <p className="font-sans text-xs text-white/60 mt-2 max-w-xs leading-relaxed">
                 Choose an audit specialty, select a pre-loaded target yard asset, or input your custom camera payload to execute active visual scanning rules.
               </p>
               
-              <div className="mt-8 grid grid-cols-2 gap-4 w-full">
-                <div className="border border-white/[0.05] rounded-xl p-3 bg-white/[0.01]">
-                  <span className="font-mono text-[8px] text-slate-500 block uppercase font-bold">Safety Score Target</span>
-                  <span className="text-emerald-400 font-display font-semibold text-sm block mt-1">90%+ Rating</span>
+              <div className="mt-8 grid grid-cols-2 gap-4 w-full text-left font-mono">
+                <div className="border border-white/10 p-4 bg-[#050505] rounded-none">
+                  <span className="text-[8px] text-white/40 block uppercase font-bold">Safety Score Target</span>
+                  <span className="text-white font-bold text-sm block mt-1">90%+ Rating</span>
                 </div>
-                <div className="border border-white/[0.05] rounded-xl p-3 bg-white/[0.01]">
-                  <span className="font-mono text-[8px] text-slate-500 block uppercase font-bold">Max Analysis Delay</span>
-                  <span className="text-cyan-400 font-display font-semibold text-sm block mt-1">~3.2 Seconds</span>
+                <div className="border border-white/10 p-4 bg-[#050505] rounded-none">
+                  <span className="text-[8px] text-white/40 block uppercase font-bold">Max Analysis Delay</span>
+                  <span className="text-white font-bold text-sm block mt-1">~3.2 Seconds</span>
                 </div>
               </div>
             </div>

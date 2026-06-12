@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { ShieldCheck, Brain, Terminal, Server, HelpCircle, LayoutGrid, FileType2, UploadCloud, Home, Sun, Moon, MessageSquare, Lightbulb, Bell, Route } from "lucide-react";
+import { Terminal, LayoutGrid, FileType2, UploadCloud, Home, MessageSquare, Lightbulb, Bell, Route, Sun, Moon, Activity } from "lucide-react";
 
 interface HeaderProps {
   currentView: string;
@@ -41,87 +41,111 @@ export default function Header({
   userEmail = "demo.logistics@transitmind.ai"
 }: HeaderProps) {
   return (
-    <header className="h-16 border-b border-white/5 bg-slate-900/40 backdrop-blur-md flex items-center justify-between px-6 shrink-0 z-50 sticky top-0 w-full">
+    <header className="h-16 border-b border-white/10 bg-[#0a0a0a] flex items-center justify-between px-6 shrink-0 z-50 sticky top-0 w-full rounded-none">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between">
         
         {/* Logo */}
         <div 
-          className="flex cursor-pointer items-center gap-3 transition-opacity hover:opacity-90"
+          className="flex cursor-pointer items-center gap-3 transition-colors hover:text-white/80"
           id="tm-logo-container"
           onClick={() => onViewChange("landing")}
         >
-          <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-400 to-blue-600 shadow-lg shadow-cyan-500/20 text-white font-bold text-lg">
+          <div className="flex h-7 w-7 items-center justify-center border border-white bg-white text-black font-mono font-bold text-sm rounded-none">
             T
           </div>
           <div>
-            <h1 className="text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">
-              TransitMind <span className="text-cyan-400">AI</span>
+            <h1 className="text-sm font-bold tracking-widest uppercase font-mono text-white">
+              TransitMind
             </h1>
           </div>
         </div>
 
         {/* Navigation Tabs */}
-        <nav className="hidden md:flex gap-8">
+        <nav className="hidden md:flex flex-1 overflow-x-auto whitespace-nowrap mx-6 px-2 gap-6 font-mono text-[11px] uppercase tracking-widest [&>button]:shrink-0">
           <button
             id="nav-btn-landing"
             onClick={() => onViewChange("landing")}
-            className={`text-sm font-medium transition-colors py-5 ${
+            className={`transition-all py-5 border-b-2 hover:text-white ${
               currentView === "landing"
-                ? "text-cyan-400 border-b-2 border-cyan-400"
-                : "text-slate-400 hover:text-white"
+                ? "text-white border-white font-bold"
+                : "text-white/40 border-transparent hover:border-white/20"
             }`}
           >
-            Landing
+            LANDING
           </button>
           
           <button
             id="nav-btn-dashboard"
             onClick={() => onViewChange("dashboard")}
-            className={`text-sm font-medium transition-colors py-5 ${
+            className={`transition-all py-5 border-b-2 hover:text-white ${
               currentView === "dashboard"
-                ? "text-cyan-400 border-b-2 border-cyan-400"
-                : "text-slate-400 hover:text-white"
+                ? "text-white border-white font-bold"
+                : "text-white/40 border-transparent hover:border-white/20"
             }`}
           >
-            Command Center
+            COMMAND CENTER
           </button>
 
           <button
             id="nav-btn-analyzer"
             onClick={() => onViewChange("analyzer")}
-            className={`text-sm font-medium transition-colors py-5 ${
+            className={`transition-all py-5 border-b-2 hover:text-white ${
               currentView === "analyzer"
-                ? "text-cyan-400 border-b-2 border-cyan-400"
-                : "text-slate-400 hover:text-white"
+                ? "text-white border-white font-bold"
+                : "text-white/40 border-transparent hover:border-white/20"
             }`}
           >
-            AI Risk Scanner
+            AI RISK SCANNER
           </button>
 
           <button
             id="nav-btn-reports"
             onClick={() => onViewChange("reports")}
-            className={`text-sm font-medium transition-colors py-5 ${
+            className={`transition-all py-5 border-b-2 hover:text-white ${
               currentView === "reports"
-                ? "text-cyan-400 border-b-2 border-cyan-400"
-                : "text-slate-400 hover:text-white"
+                ? "text-white border-white font-bold"
+                : "text-white/40 border-transparent hover:border-white/20"
             }`}
           >
-            Audit Vault
+            AUDIT VAULT
+          </button>
+
+          <button
+            id="nav-btn-projects"
+            onClick={() => onViewChange("projects")}
+            className={`transition-all py-5 border-b-2 hover:text-white ${
+              currentView === "projects"
+                ? "text-white border-white font-bold"
+                : "text-white/40 border-transparent hover:border-white/20"
+            }`}
+          >
+            BENTO PROJECTS
+          </button>
+
+          <button
+            id="nav-btn-stress"
+            onClick={() => onViewChange("stress")}
+            className={`transition-all py-5 border-b-2 hover:text-white ${
+              currentView === "stress"
+                ? "text-white border-white font-bold"
+                : "text-white/40 border-transparent hover:border-white/20"
+            }`}
+          >
+            BIOMETRICS
           </button>
         </nav>
 
-        {/* Demo Mode Toggle & User Details */}
-        <div className="flex items-center gap-4">
+        {/* Action Toggles & User Profile */}
+        <div className="flex items-center gap-3">
           
           {/* Route Finder Toggle */}
           {onToggleRouteFinder && (
             <button
               onClick={onToggleRouteFinder}
-              className={`flex items-center justify-center h-8 w-8 rounded-lg border transition-colors ${
+              className={`flex items-center justify-center h-8 w-8 border transition-all rounded-none ${
                 isRouteFinderOpen 
-                  ? 'bg-cyan-500/20 border-cyan-500/50 text-cyan-400' 
-                  : 'bg-slate-900/90 border-white/[0.05] text-slate-400 hover:text-white'
+                  ? 'bg-white text-black border-white' 
+                  : 'bg-[#050505] border-white/10 text-white/50 hover:text-white hover:border-white/30'
               }`}
               title="Route Finder"
             >
@@ -133,10 +157,10 @@ export default function Header({
           {onToggleNotificationSettings && (
             <button
               onClick={onToggleNotificationSettings}
-              className={`flex items-center justify-center h-8 w-8 rounded-lg border transition-colors ${
+              className={`flex items-center justify-center h-8 w-8 border transition-all rounded-none ${
                 isNotificationSettingsOpen 
-                  ? 'bg-cyan-500/20 border-cyan-500/50 text-cyan-400' 
-                  : 'bg-slate-900/90 border-white/[0.05] text-slate-400 hover:text-white'
+                  ? 'bg-white text-black border-white' 
+                  : 'bg-[#050505] border-white/10 text-white/50 hover:text-white hover:border-white/30'
               }`}
               title="Notification Settings"
             >
@@ -148,10 +172,10 @@ export default function Header({
           {onToggleRecommendations && (
             <button
               onClick={onToggleRecommendations}
-              className={`flex items-center justify-center h-8 w-8 rounded-lg border transition-colors ${
+              className={`flex items-center justify-center h-8 w-8 border transition-all rounded-none ${
                 isRecommendationsOpen 
-                  ? 'bg-amber-500/20 border-amber-500/50 text-amber-400' 
-                  : 'bg-slate-900/90 border-white/[0.05] text-amber-500/80 hover:text-amber-400 hover:border-amber-500/30'
+                  ? 'bg-white text-black border-white' 
+                  : 'bg-[#050505] border-white/10 text-white/50 hover:text-white hover:border-white/30'
               }`}
               title="Smart Recommendations"
             >
@@ -163,10 +187,10 @@ export default function Header({
           {onToggleChat && (
             <button
               onClick={onToggleChat}
-              className={`flex items-center justify-center h-8 w-8 rounded-lg border transition-colors ${
+              className={`flex items-center justify-center h-8 w-8 border transition-all rounded-none ${
                 isChatOpen 
-                  ? 'bg-cyan-500/20 border-cyan-500/50 text-cyan-400' 
-                  : 'bg-slate-900/90 border-white/[0.05] text-slate-400 hover:text-white'
+                  ? 'bg-white text-black border-white' 
+                  : 'bg-[#050505] border-white/10 text-white/50 hover:text-white hover:border-white/30'
               }`}
               title="Toggle Discussion Chat"
             >
@@ -174,41 +198,41 @@ export default function Header({
             </button>
           )}
 
-          {/* Theme Toggle */}
+          {/* Theme Toggle Button */}
           <button
             onClick={onToggleTheme}
-            className="flex items-center justify-center h-8 w-8 rounded-lg bg-slate-900/90 border border-white/[0.05] text-slate-400 hover:text-white transition-colors"
-            title="Toggle Theme"
+            className="flex items-center justify-center h-8 w-8 border border-white/10 bg-[#050505] text-white/50 hover:text-white hover:border-white/30 rounded-none transition-all"
+            title={theme === 'dark' ? "Switch to Light Mode" : "Switch to Dark Mode"}
           >
             {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </button>
 
           {/* Simulation Toggle */}
-          <div className="flex items-center gap-2 rounded-lg bg-slate-900/90 py-1.5 px-3 border border-white/[0.05]">
-            <span className="font-mono text-[10px] text-slate-500">ENGINE:</span>
+          <div className="flex items-center gap-2 bg-[#050505] py-1 px-3 border border-white/10 rounded-none">
+            <span className="font-mono text-[9px] text-white/45">SYS:</span>
             <button
               id="mock-mode-toggle"
               onClick={onToggleMockMode}
-              className={`relative flex items-center gap-1.5 rounded-md px-2 py-1 text-[10px] font-mono tracking-tight transition-all uppercase ${
+              className={`flex items-center gap-1.5 px-2 py-0.5 text-[9px] font-mono tracking-tight transition-all uppercase rounded-none border ${
                 mockMode
-                  ? "bg-amber-500/10 text-amber-400 border border-amber-500/20"
-                  : "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20"
+                  ? "bg-white/5 text-white/60 border-white/15"
+                  : "bg-white text-black border-white"
               }`}
               title={mockMode ? "Running local high-fidelity mock calculations" : "Connected to Gemini Vision API"}
             >
               <Terminal className="h-3 w-3" />
-              <span>{mockMode ? "SIMULATED ACTIVE" : "GEMINI 3.5 AI"}</span>
+              <span>{mockMode ? "MOCK" : "GEMINI"}</span>
             </button>
           </div>
 
           {/* User Profile */}
-          <div className="hidden lg:flex items-center gap-4 pl-4">
-            <div className="text-right">
-              <p className="text-xs text-slate-500">Enterprise Node</p>
-              <p className="text-sm font-semibold text-slate-200">{userEmail.split("@")[0]}</p>
+          <div className="hidden lg:flex items-center gap-3 pl-2 border-l border-white/10">
+            <div className="text-right font-mono">
+              <p className="text-[8px] text-white/40 uppercase">ENTERPRISE NODE</p>
+              <p className="text-xs font-bold text-white uppercase tracking-wider">{userEmail.split("@")[0]}</p>
             </div>
-            <div className="w-10 h-10 rounded-full border-2 border-cyan-500/30 p-0.5">
-              <div className="w-full h-full bg-slate-800 rounded-full flex items-center justify-center text-xs text-white">TM</div>
+            <div className="w-8 h-8 border border-white/20 bg-white/5 text-white flex items-center justify-center text-[10px] font-mono font-bold rounded-none">
+              TM
             </div>
           </div>
           
@@ -216,34 +240,48 @@ export default function Header({
       </div>
       
       {/* Mobile nav indicator bar */}
-      <div className="md:hidden flex items-center justify-around bg-slate-950 border-t border-white/[0.05] py-2">
+      <div className="md:hidden flex items-center justify-around bg-black border-t border-white/10 py-2 fixed bottom-0 left-0 right-0 z-50">
         <button
           onClick={() => onViewChange("landing")}
-          className={`flex flex-col items-center gap-0.5 text-slate-400 hover:text-white ${currentView === "landing" ? "text-cyan-400" : ""}`}
+          className={`flex flex-col items-center gap-0.5 text-white/40 hover:text-white ${currentView === "landing" ? "text-white" : ""}`}
         >
           <Home className="h-4 w-4" />
-          <span className="text-[9px]">Landing</span>
+          <span className="text-[8px] font-mono uppercase">Landing</span>
         </button>
         <button
           onClick={() => onViewChange("dashboard")}
-          className={`flex flex-col items-center gap-0.5 text-slate-400 hover:text-white ${currentView === "dashboard" ? "text-cyan-400" : ""}`}
+          className={`flex flex-col items-center gap-0.5 text-white/40 hover:text-white ${currentView === "dashboard" ? "text-white" : ""}`}
         >
           <LayoutGrid className="h-4 w-4" />
-          <span className="text-[9px]">Dashboard</span>
+          <span className="text-[8px] font-mono uppercase">Console</span>
         </button>
         <button
           onClick={() => onViewChange("analyzer")}
-          className={`flex flex-col items-center gap-0.5 text-slate-400 hover:text-white ${currentView === "analyzer" ? "text-cyan-400" : ""}`}
+          className={`flex flex-col items-center gap-0.5 text-white/40 hover:text-white ${currentView === "analyzer" ? "text-white" : ""}`}
         >
           <UploadCloud className="h-4 w-4" />
-          <span className="text-[9px]">Scanner</span>
+          <span className="text-[8px] font-mono uppercase">Scanner</span>
         </button>
         <button
           onClick={() => onViewChange("reports")}
-          className={`flex flex-col items-center gap-0.5 text-slate-400 hover:text-white ${currentView === "reports" ? "text-cyan-400" : ""}`}
+          className={`flex flex-col items-center gap-0.5 text-white/40 hover:text-white ${currentView === "reports" ? "text-white" : ""}`}
         >
           <FileType2 className="h-4 w-4" />
-          <span className="text-[9px]">Vault</span>
+          <span className="text-[8px] font-mono uppercase">Vault</span>
+        </button>
+        <button
+          onClick={() => onViewChange("projects")}
+          className={`flex flex-col items-center gap-0.5 text-white/40 hover:text-white ${currentView === "projects" ? "text-white" : ""}`}
+        >
+          <LayoutGrid className="h-4 w-4" />
+          <span className="text-[8px] font-mono uppercase">Projects</span>
+        </button>
+        <button
+          onClick={() => onViewChange("stress")}
+          className={`flex flex-col items-center gap-0.5 text-white/40 hover:text-white ${currentView === "stress" ? "text-white" : ""}`}
+        >
+          <Activity className="h-4 w-4" />
+          <span className="text-[8px] font-mono uppercase">Biometrics</span>
         </button>
       </div>
     </header>

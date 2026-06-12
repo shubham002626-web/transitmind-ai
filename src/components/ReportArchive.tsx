@@ -11,10 +11,7 @@ import {
   Search, 
   Download, 
   Calendar, 
-  MapPin, 
   ShieldCheck, 
-  AlertTriangle, 
-  HelpCircle,
   Filter,
   Layers,
   ArrowUpRight,
@@ -24,7 +21,7 @@ import {
   LayoutGrid,
   List
 } from "lucide-react";
-import { Report, ReportType, RiskLevel } from "../types";
+import { Report } from "../types";
 
 interface ReportArchiveProps {
   reports: Report[];
@@ -63,9 +60,9 @@ export default function ReportArchive({
 
   const handleToggleSelectAll = () => {
     if (selectedIds.length === filteredReports.length && filteredReports.length > 0) {
-      setSelectedIds([]); // deselect all
+      setSelectedIds([]);
     } else {
-      setSelectedIds(filteredReports.map(r => r.id)); // select all
+      setSelectedIds(filteredReports.map(r => r.id));
     }
   };
 
@@ -82,7 +79,6 @@ export default function ReportArchive({
 
     try {
       const zip = new JSZip();
-      
       const selectedReports = reports.filter(r => selectedIds.includes(r.id));
       
       for (const report of selectedReports) {
@@ -112,96 +108,96 @@ export default function ReportArchive({
 
   const getRiskColor = (level: string) => {
     switch (level) {
-      case "HIGH": return "text-red-400 bg-red-950/30 border-red-500/25";
-      case "MEDIUM": return "text-amber-400 bg-amber-950/30 border-amber-500/25";
-      case "LOW": return "text-emerald-400 bg-emerald-950/30 border-emerald-500/25";
-      default: return "text-slate-400 bg-slate-900/30 border-white/[0.05]";
+      case "HIGH": return "text-red-400 bg-red-950/20 border-red-500/20";
+      case "MEDIUM": return "text-amber-400 bg-amber-950/20 border-amber-500/20";
+      case "LOW": return "text-emerald-400 bg-emerald-950/20 border-emerald-500/20";
+      default: return "text-white/60 bg-[#0a0a0a] border-white/10";
     }
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 text-left">
+    <div className="mx-auto max-w-7xl px-6 py-12 text-left space-y-8">
       
       {/* Title */}
-      <div className="border-b border-white/[0.08] pb-6 mb-8">
-        <h1 className="font-display text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-          <FileText className="h-5.5 w-5.5 text-cyan-500" />
-          Logistics Audit Vault
+      <div className="border-b border-white/10 pb-6">
+        <h1 className="font-display text-2xl font-black tracking-tight text-white uppercase flex items-center gap-2">
+          <FileText className="h-5.5 w-5.5 text-white" />
+          Audit Vault Ledger
         </h1>
-        <p className="font-sans text-xs text-slate-400 mt-1">
+        <p className="font-sans text-xs text-white/60 mt-1">
           Historical listing of visual inspections, compliance records, and signed export certificates.
         </p>
       </div>
 
       {/* Filters & Search Grid */}
-      <div className="glass-panel rounded-2xl p-5 border border-white/[0.06] mb-8 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+      <div className="bg-[#0a0a0a] border border-white/10 p-4 grid grid-cols-1 md:grid-cols-12 gap-4 items-center rounded-none">
         
         {/* Search */}
         <div className="md:col-span-5 relative">
-          <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
+          <Search className="absolute left-3 top-3 h-4 w-4 text-white/40" />
           <input
             type="text"
-            placeholder="Search report ID, title, or tags..."
+            placeholder="SEARCH RECORDS LEDGER..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-4 py-2.5 bg-slate-950 border border-white/[0.08] rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500/50 transition-colors"
+            className="w-full pl-9 pr-4 py-2.5 bg-[#050505] border border-white/10 text-xs text-white placeholder-white/20 focus:outline-none focus:border-white transition-colors rounded-none font-mono"
           />
         </div>
 
         {/* Filter Specialty */}
         <div className="md:col-span-3 flex items-center gap-2">
-          <Filter className="h-3.5 w-3.5 text-slate-400 shrink-0" />
+          <Filter className="h-3.5 w-3.5 text-white/40 shrink-0" />
           <select
             value={filterType}
             onChange={(e) => setFilterType(e.target.value)}
-            className="w-full bg-slate-950 border border-white/[0.08] rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-cyan-500/50"
+            className="w-full bg-[#050505] border border-white/10 px-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-white rounded-none"
           >
-            <option value="ALL">All Specialties</option>
-            <option value="WAREHOUSE">Warehouse</option>
-            <option value="CARGO">Cargo Damage</option>
-            <option value="TRUCK_LOADING">Load Security</option>
+            <option value="ALL">ALL SPECIALTIES</option>
+            <option value="WAREHOUSE">WAREHOUSE</option>
+            <option value="CARGO">CARGO DAMAGE</option>
+            <option value="TRUCK_LOADING">LOAD SECURITY</option>
           </select>
         </div>
 
         {/* Filter Risk */}
         <div className="md:col-span-4 flex items-center gap-2">
-          <Layers className="h-3.5 w-3.5 text-slate-400 shrink-0" />
+          <Layers className="h-3.5 w-3.5 text-white/40 shrink-0" />
           <select
             value={filterRisk}
             onChange={(e) => setFilterRisk(e.target.value)}
-            className="w-full bg-slate-950 border border-white/[0.08] rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-cyan-500/50"
+            className="w-full bg-[#050505] border border-white/10 px-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-white rounded-none"
           >
-            <option value="ALL">All Risk Levels</option>
-            <option value="LOW">Low Risk</option>
-            <option value="MEDIUM">Medium Risk</option>
-            <option value="HIGH">High-alert Risk</option>
+            <option value="ALL">ALL RISK LEVELS</option>
+            <option value="LOW">LOW RISK</option>
+            <option value="MEDIUM">MEDIUM RISK</option>
+            <option value="HIGH">HIGH RISK</option>
           </select>
         </div>
 
       </div>
 
       {/* Bulk Actions & View Mode Bar */}
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-mono text-xs">
+        <div className="flex flex-wrap items-center gap-4">
           <button
             onClick={handleToggleSelectAll}
-            className="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors"
+            className="flex items-center gap-2 text-white/80 hover:text-white transition-colors"
           >
             {selectedIds.length === filteredReports.length && filteredReports.length > 0 ? (
-              <CheckSquare className="h-4.5 w-4.5 text-cyan-500" />
+              <CheckSquare className="h-4.5 w-4.5 text-white" />
             ) : (
-              <Square className="h-4.5 w-4.5 text-slate-500" />
+              <Square className="h-4.5 w-4.5 text-white/40" />
             )}
-            <span>Select All</span>
+            <span>SELECT ALL</span>
           </button>
 
           {selectedIds.length > 0 && (
             <button
               onClick={handleDeleteSelected}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-semibold border border-red-500/20 transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-red-950/20 hover:bg-red-950/40 text-red-400 font-bold border border-red-500/20 transition-colors rounded-none"
             >
               <Trash2 className="h-3.5 w-3.5" />
-              Delete Selected ({selectedIds.length})
+              DELETE ({selectedIds.length})
             </button>
           )}
 
@@ -209,30 +205,30 @@ export default function ReportArchive({
             <button
               onClick={handleBatchDownload}
               disabled={isZipping}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 text-xs font-semibold border border-cyan-500/20 transition-colors disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-white text-black font-bold border border-white hover:bg-[#050505] hover:text-white transition-colors rounded-none disabled:opacity-50"
             >
               {isZipping ? (
-                <div className="h-3.5 w-3.5 rounded-full border-2 border-cyan-400 border-t-transparent animate-spin"></div>
+                <div className="h-3.5 w-3.5 border border-black border-t-transparent animate-spin rounded-none"></div>
               ) : (
                 <Download className="h-3.5 w-3.5" />
               )}
-              {isZipping ? "Creating Zip..." : `Download Zip (${selectedIds.length})`}
+              {isZipping ? "PACKAGING..." : `ZIP EXPORT (${selectedIds.length})`}
             </button>
           )}
         </div>
 
         {/* View Toggles */}
-        <div className="flex items-center bg-slate-900 border border-white/[0.08] rounded-lg p-1">
+        <div className="flex items-center bg-[#0a0a0a] border border-white/10 p-1 rounded-none self-end sm:self-auto">
           <button
             onClick={() => setViewMode("grid")}
-            className={`p-1.5 rounded text-slate-400 hover:text-white transition-colors ${viewMode === 'grid' ? 'bg-white/[0.08] text-white shadow-sm' : ''}`}
+            className={`p-1.5 rounded-none text-white/40 hover:text-white transition-colors ${viewMode === 'grid' ? 'bg-white/10 text-white' : ''}`}
             title="Grid View"
           >
             <LayoutGrid className="h-4 w-4" />
           </button>
           <button
             onClick={() => setViewMode("timeline")}
-            className={`p-1.5 rounded text-slate-400 hover:text-white transition-colors ${viewMode === 'timeline' ? 'bg-white/[0.08] text-white shadow-sm' : ''}`}
+            className={`p-1.5 rounded-none text-white/40 hover:text-white transition-colors ${viewMode === 'timeline' ? 'bg-white/10 text-white' : ''}`}
             title="Timeline View"
           >
             <List className="h-4 w-4" />
@@ -247,8 +243,8 @@ export default function ReportArchive({
           filteredReports.map((report) => (
             <div 
               key={report.id} 
-              className={`glass-panel rounded-2xl overflow-hidden border transition-all flex flex-col justify-between h-[350px] relative ${
-                selectedIds.includes(report.id) ? "border-cyan-500 shadow-[0_0_15px_rgba(34,211,238,0.15)] ring-1 ring-cyan-500/30" : "border-white/[0.06] hover:border-cyan-500/20"
+              className={`bg-[#0a0a0a] border transition-all flex flex-col justify-between h-[360px] relative rounded-none ${
+                selectedIds.includes(report.id) ? "border-white" : "border-white/10 hover:border-white/30"
               }`}
               id={`archive-card-${report.id}`}
             >
@@ -258,11 +254,11 @@ export default function ReportArchive({
                 onClick={() => handleToggleSingle(report.id)}
               >
                 {selectedIds.includes(report.id) ? (
-                  <div className="bg-cyan-500 rounded text-slate-950 shadow shadow-cyan-500/30 ring-1 ring-cyan-400">
+                  <div className="bg-white text-black border border-white">
                     <CheckSquare className="h-5 w-5" />
                   </div>
                 ) : (
-                  <div className="bg-slate-900/60 rounded text-slate-400 hover:text-white hover:bg-slate-800/80 ring-1 ring-white/10 backdrop-blur-sm transition-all">
+                  <div className="bg-black/60 text-white/40 hover:text-white border border-white/10 backdrop-blur-sm transition-all">
                     <Square className="h-5 w-5" />
                   </div>
                 )}
@@ -271,82 +267,78 @@ export default function ReportArchive({
               <div>
                 
                 {/* Card Header image simulation */}
-                <div className="h-28 bg-slate-900 overflow-hidden relative cursor-pointer" onClick={() => handleToggleSingle(report.id)}>
+                <div className="h-32 bg-black overflow-hidden relative cursor-pointer border-b border-white/5" onClick={() => handleToggleSingle(report.id)}>
                   {report.imageUrl ? (
                     <img 
                       src={report.imageUrl} 
                       alt={report.title} 
-                      className="object-cover w-full h-full opacity-40"
+                      className="object-cover w-full h-full opacity-40 grayscale"
                     />
                   ) : (
-                    <div className="w-full h-full bg-gradient-to-tr from-slate-900 to-slate-950 flex items-center justify-center text-slate-700">
-                      <FileText className="h-10 w-10 opacity-30" />
+                    <div className="w-full h-full flex items-center justify-center text-white/20">
+                      <FileText className="h-10 w-10" />
                     </div>
                   )}
                   
                   {/* Overlay labels */}
-                  <div className="absolute inset-x-3 bottom-2 flex items-center justify-between">
-                    <span className="font-mono text-[9px] bg-black/80 px-2 py-0.5 rounded text-white font-semibold">
+                  <div className="absolute inset-x-3 bottom-2 flex items-center justify-between font-mono">
+                    <span className="text-[9px] bg-black px-2 py-0.5 border border-white/10 text-white font-bold">
                       {report.id}
                     </span>
-                    <span className={`text-[8px] font-mono font-bold px-2 py-0.5 rounded border uppercase tracking-wider ${getRiskColor(report.riskLevel)}`}>
+                    <span className={`text-[8px] font-bold px-2 py-0.5 border uppercase tracking-wider rounded-none ${getRiskColor(report.riskLevel)}`}>
                       {report.riskLevel}
                     </span>
                   </div>
                 </div>
 
-                <div className="p-4 text-left">
-                  {/* Title */}
-                  <h3 className="font-display text-sm font-semibold text-white leading-snug line-clamp-1">
+                <div className="p-5 text-left space-y-2">
+                  <h3 className="font-mono text-xs font-bold text-white uppercase tracking-wider line-clamp-1">
                     {report.title}
                   </h3>
 
-                  <div className="flex items-center gap-3 font-mono text-[9px] text-slate-500 mt-1">
+                  <div className="flex items-center gap-3 font-mono text-[9px] text-white/40">
                     <span className="flex items-center gap-1">
-                      <Calendar className="h-3 w-3 text-cyan-500" />
+                      <Calendar className="h-3 w-3 text-white/60" />
                       {report.uploadDate}
                     </span>
                     <span>•</span>
-                    <span className="uppercase text-slate-400">
+                    <span className="uppercase text-white/60">
                       {report.type.replace("_", " ")}
                     </span>
                   </div>
 
-                  {/* Summary text */}
-                  <p className="font-sans text-[11px] text-slate-400 mt-2.5 line-clamp-3 leading-relaxed">
+                  <p className="font-sans text-[11px] text-white/60 line-clamp-3 leading-relaxed">
                     {report.executiveSummary}
                   </p>
                 </div>
               </div>
 
               {/* Bottom metrics and trigger button */}
-              <div className="border-t border-white/[0.04] p-4 bg-white/[0.01] flex items-center justify-between">
+              <div className="border-t border-white/15 p-4 bg-[#050505] flex items-center justify-between rounded-none">
                 
-                {/* Compact metrics badges */}
-                <div className="flex gap-2 font-mono text-[9px] text-slate-400">
-                  <div className="flex items-center gap-1 bg-slate-900 px-1.5 py-0.5 rounded border border-white/[0.03]" title="Safety score check">
-                    <span className="h-1 w-1 bg-emerald-500 rounded-full"></span>
+                <div className="flex gap-2 font-mono text-[9px]">
+                  <div className="flex items-center gap-1 bg-[#0a0a0a] px-2 py-0.5 border border-white/5 text-white/60">
+                    <span className="h-1 w-1 bg-white"></span>
                     S:{report.safetyScore}
                   </div>
-                  <div className="flex items-center gap-1 bg-slate-900 px-1.5 py-0.5 rounded border border-white/[0.03]" title="Warehouse optimization ratio">
-                    <span className="h-1 w-1 bg-indigo-500 rounded-full"></span>
+                  <div className="flex items-center gap-1 bg-[#0a0a0a] px-2 py-0.5 border border-white/5 text-white/60">
+                    <span className="h-1 w-1 bg-white/60"></span>
                     W:{report.warehouseScore}
                   </div>
                 </div>
 
                 {/* Inspect Action */}
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 font-mono">
                   <button
                     onClick={() => onSelectReport(report)}
-                    className="text-[10px] font-bold text-cyan-400 hover:text-white flex items-center gap-0.5"
+                    className="text-[10px] font-bold text-white hover:underline uppercase tracking-wider"
                     id={`inspect-archive-btn-${report.id}`}
                   >
                     INSPECT
-                    <ArrowUpRight className="h-3 w-3" />
                   </button>
                   <button
                     onClick={() => onDownloadPDF(report)}
-                    className="p-1.5 rounded-md bg-white/[0.02] border border-white/[0.08] hover:bg-white/[0.08] text-slate-300 hover:text-white"
+                    className="p-1.5 bg-[#0a0a0a] border border-white/10 hover:border-white text-white transition-colors"
                     title="Export Audit PDF"
                   >
                     <Download className="h-3.5 w-3.5" />
@@ -358,61 +350,58 @@ export default function ReportArchive({
             </div>
           ))
         ) : (
-          <div className="md:col-span-3 py-16 text-center glass-panel rounded-2xl border border-white/[0.06] flex flex-col items-center justify-center">
-            <Calendar className="h-10 w-10 text-slate-600 mb-3" />
-            <h3 className="font-display font-semibold text-white text-sm">No reports match filter criteria</h3>
-            <p className="text-xs text-slate-400 mt-1 max-w-sm px-4">
+          <div className="md:col-span-3 py-20 text-center bg-[#0a0a0a] border border-white/10 flex flex-col items-center justify-center rounded-none font-mono">
+            <Calendar className="h-10 w-10 text-white/20 mb-4" />
+            <h3 className="text-xs font-bold text-white uppercase tracking-wider">No matches found</h3>
+            <p className="text-xs text-white/40 mt-1 max-w-xs px-4">
               Clear your query or filters, or execute a new AI Risk analysis snapshot inside the dashboard.
             </p>
           </div>
         )}
         </div>
       ) : (
-        <div className="relative border-l-2 border-white/[0.08] ml-4 md:ml-32 space-y-8 pb-12 mt-6">
+        <div className="relative border-l border-white/10 ml-4 md:ml-32 space-y-8 pb-12 mt-6">
           {filteredReports.length > 0 ? (
             filteredReports.map((report) => (
-              <div key={report.id} className="relative pl-6 md:pl-10 group">
+              <div key={report.id} className="relative pl-6 md:pl-10 group text-left">
                 {/* Timeline dot */}
-                <div className="absolute -left-[9px] top-4 h-4 w-4 rounded-full bg-slate-950 border-2 border-slate-600 group-hover:border-cyan-500 transition-colors z-10 flex items-center justify-center">
-                  <div className="h-1.5 w-1.5 rounded-full bg-slate-500 group-hover:bg-cyan-400 transition-colors"></div>
-                </div>
+                <div className="absolute -left-[4.5px] top-4 h-2.5 w-2.5 bg-black border border-white/40 group-hover:border-white transition-colors z-10 flex items-center justify-center"></div>
 
                 {/* Timeline timestamp (desktop) */}
-                <div className="absolute -left-36 md:-left-40 top-3 font-mono text-[10px] text-slate-500 group-hover:text-cyan-400 transition-colors w-28 md:w-32 text-right hidden sm:block">
+                <div className="absolute -left-36 md:-left-40 top-3.5 font-mono text-[9px] text-white/40 group-hover:text-white transition-colors w-28 md:w-32 text-right hidden sm:block">
                   {report.uploadDate}
                 </div>
 
                 {/* Card */}
                 <div 
-                  className={`glass-panel border rounded-xl overflow-hidden transition-all flex flex-col sm:flex-row ${
-                    selectedIds.includes(report.id) ? "border-cyan-500 shadow-[0_0_15px_rgba(34,211,238,0.15)] ring-1 ring-cyan-500/30" : "border-white/[0.06] hover:border-cyan-500/20"
+                  className={`bg-[#0a0a0a] border flex flex-col sm:flex-row rounded-none ${
+                    selectedIds.includes(report.id) ? "border-white" : "border-white/10 hover:border-white/30"
                   }`}
                 >
-                  {/* Left Column in Timeline context */}
-                  <div className="flex-1 p-5">
-                    <div className="flex flex-wrap items-start justify-between gap-2 mb-3">
+                  <div className="flex-1 p-5 font-mono">
+                    <div className="flex flex-wrap items-start justify-between gap-4 mb-3">
                       <div>
                         <div className="flex items-center gap-3">
-                          <button onClick={() => handleToggleSingle(report.id)} className="shrink-0 text-slate-500 hover:text-cyan-400 transition-colors">
+                          <button onClick={() => handleToggleSingle(report.id)} className="shrink-0 text-white/40 hover:text-white transition-colors">
                             {selectedIds.includes(report.id) ? (
-                              <CheckSquare className="h-5 w-5 text-cyan-500" />
+                              <CheckSquare className="h-5 w-5 text-white" />
                             ) : (
                               <Square className="h-5 w-5" />
                             )}
                           </button>
-                          <h3 className="font-display text-sm font-semibold text-white leading-snug">
+                          <h3 className="text-xs font-bold text-white uppercase tracking-wider">
                             {report.title}
                           </h3>
                         </div>
-                        <div className="flex items-center gap-2 mt-2 ml-8">
-                          <span className="font-mono text-[9px] bg-slate-900 border border-white/10 px-1.5 py-0.5 rounded text-slate-400 font-semibold uppercase">
+                        <div className="flex items-center gap-2 mt-2.5 ml-8 text-[9px]">
+                          <span className="bg-[#050505] border border-white/5 px-2 py-0.5 text-white/50 font-semibold uppercase">
                             REF: {report.id}
                           </span>
-                          <span className={`text-[8px] font-mono font-bold px-1.5 py-0.5 rounded border uppercase tracking-wider ${getRiskColor(report.riskLevel)}`}>
+                          <span className={`text-[8px] font-bold px-2 py-0.5 border uppercase tracking-wider rounded-none ${getRiskColor(report.riskLevel)}`}>
                             {report.riskLevel}
                           </span>
                         </div>
-                        <div className="sm:hidden font-mono text-[9px] text-slate-500 mt-2 flex items-center gap-1 ml-8">
+                        <div className="sm:hidden text-[9px] text-white/40 mt-2 flex items-center gap-1 ml-8">
                           <Calendar className="h-3 w-3" /> {report.uploadDate}
                         </div>
                       </div>
@@ -420,32 +409,25 @@ export default function ReportArchive({
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => onSelectReport(report)}
-                          className="text-[10px] font-bold text-slate-800 bg-cyan-400 hover:bg-cyan-300 rounded px-3 py-1.5 flex items-center gap-1 transition-colors"
+                          className="text-[9px] font-bold text-black bg-white hover:bg-white/80 px-3 py-1.5 transition-colors uppercase tracking-widest rounded-none border border-white"
                         >
                           INSPECT
-                          <ArrowUpRight className="h-3 w-3" />
                         </button>
                       </div>
                     </div>
                     
-                    <p className="font-sans text-xs text-slate-400 line-clamp-2 leading-relaxed ml-8">
+                    <p className="font-sans text-[11px] text-white/60 line-clamp-2 leading-relaxed ml-8">
                       {report.executiveSummary}
                     </p>
                     
-                    <div className="flex items-center gap-4 mt-4 pt-4 border-t border-white/[0.05] ml-8">
+                    <div className="flex items-center gap-6 mt-4 pt-4 border-t border-white/5 ml-8 text-[9px]">
                       <div className="flex items-center gap-2">
-                        <span className="text-[10px] text-slate-500 uppercase tracking-wider font-mono">Safety</span>
-                        <div className="h-1 w-16 bg-slate-900 rounded-full overflow-hidden">
-                          <div className={`h-full ${report.safetyScore >= 90 ? 'bg-emerald-500' : report.safetyScore >= 70 ? 'bg-amber-500' : 'bg-red-500'}`} style={{ width: `${report.safetyScore}%` }}></div>
-                        </div>
-                        <span className="text-[10px] font-mono font-bold text-emerald-400">{report.safetyScore}%</span>
+                        <span className="text-white/40 uppercase">Safety Index</span>
+                        <span className="font-bold text-white">{report.safetyScore}%</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="text-[10px] text-slate-500 uppercase tracking-wider font-mono">Warehouse</span>
-                        <div className="h-1 w-16 bg-slate-900 rounded-full overflow-hidden">
-                          <div className={`h-full ${report.warehouseScore >= 90 ? 'bg-indigo-500' : report.warehouseScore >= 70 ? 'bg-amber-500' : 'bg-red-500'}`} style={{ width: `${report.warehouseScore}%` }}></div>
-                        </div>
-                        <span className="text-[10px] font-mono font-bold text-indigo-400">{report.warehouseScore}%</span>
+                        <span className="text-white/40 uppercase">Warehouse Index</span>
+                        <span className="font-bold text-white">{report.warehouseScore}%</span>
                       </div>
                     </div>
                   </div>
@@ -453,10 +435,10 @@ export default function ReportArchive({
               </div>
             ))
           ) : (
-            <div className="py-16 text-center glass-panel rounded-2xl border border-white/[0.06] flex flex-col items-center justify-center -ml-4 md:-ml-32">
-              <Calendar className="h-10 w-10 text-slate-600 mb-3" />
-              <h3 className="font-display font-semibold text-white text-sm">No reports match filter criteria</h3>
-              <p className="text-xs text-slate-400 mt-1 max-w-sm px-4">
+            <div className="py-20 text-center bg-[#0a0a0a] border border-white/10 flex flex-col items-center justify-center -ml-4 md:-ml-32 rounded-none font-mono">
+              <Calendar className="h-10 w-10 text-white/20 mb-4" />
+              <h3 className="text-xs font-bold text-white uppercase tracking-wider">No matches found</h3>
+              <p className="text-xs text-white/40 mt-1 max-w-xs px-4">
                 Clear your query or filters, or execute a new AI Risk analysis snapshot inside the dashboard.
               </p>
             </div>

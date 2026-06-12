@@ -32,6 +32,8 @@ import CompareSidebar from "./components/CompareSidebar";
 import SmartRecommendationsDrawer from "./components/SmartRecommendationsDrawer";
 import NotificationSettingsModal from "./components/NotificationSettingsModal";
 import RouteFinderModal from "./components/RouteFinderModal";
+import ProjectShowcase from "./components/ProjectShowcase";
+import DriverStressScanner from "./components/DriverStressScanner";
 
 // Import types
 import { Report, ReportType, RiskLevel } from "./types";
@@ -62,6 +64,15 @@ export default function App() {
   const handleToggleTheme = () => {
     setTheme(t => t === 'dark' ? 'light' : 'dark');
   };
+
+  // Synchronize theme state to DOM classlist
+  useEffect(() => {
+    if (theme === "light") {
+      document.documentElement.classList.add("light-mode");
+    } else {
+      document.documentElement.classList.remove("light-mode");
+    }
+  }, [theme]);
 
   const handleToggleMockMode = () => {
     setMockMode(!mockMode);
@@ -267,7 +278,7 @@ export default function App() {
   };
 
   return (
-    <div className={`min-h-screen bg-slate-950 text-slate-200 selection:bg-cyan-500/30 selection:text-white relative font-sans ${theme === 'light' ? 'light-mode' : ''}`}>
+    <div className="min-h-screen bg-[#050505] text-[#FAFAFA] selection:bg-white/10 selection:text-white relative font-sans">
       
       {/* Header Panel */}
       <Header 
@@ -276,8 +287,6 @@ export default function App() {
           setCurrentView(v);
           setSelectedReport(null); // close selection if navigating
         }}
-        theme={theme}
-        onToggleTheme={handleToggleTheme}
         isChatOpen={isChatOpen}
         onToggleChat={() => setIsChatOpen(!isChatOpen)}
         isRecommendationsOpen={isRecommendationsOpen}
@@ -288,6 +297,8 @@ export default function App() {
         onToggleRouteFinder={() => setIsRouteFinderOpen(true)}
         mockMode={mockMode}
         onToggleMockMode={handleToggleMockMode}
+        theme={theme}
+        onToggleTheme={handleToggleTheme}
       />
 
       {/* Main Container */}
@@ -300,9 +311,9 @@ export default function App() {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="fixed top-18 right-4 z-50 rounded-xl bg-slate-900 border border-emerald-500/30 py-2.5 px-4.5 font-sans text-xs font-semibold text-emerald-400 shadow-xl flex items-center gap-2.5 backdrop-blur-md"
+              className="fixed top-20 right-6 z-50 rounded-none bg-black border border-white/20 py-3 px-5 font-mono text-[9px] uppercase tracking-wider text-white shadow-2xl flex items-center gap-2.5"
             >
-              <ShieldCheck className="h-4.5 w-4.5 text-emerald-400 shrink-0" />
+              <span className="h-1.5 w-1.5 bg-white shrink-0"></span>
               <span>{toastMessage}</span>
             </motion.div>
           )}
@@ -385,6 +396,32 @@ export default function App() {
             </motion.div>
           )}
 
+          {/* View Tab 5: Bento Projects Showcase */}
+          {currentView === "projects" && (
+            <motion.div 
+              key="projects-view"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <ProjectShowcase />
+            </motion.div>
+          )}
+
+          {/* View Tab 6: Driver Biometrics Stress Scanner */}
+          {currentView === "stress" && (
+            <motion.div 
+              key="stress-view"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <DriverStressScanner />
+            </motion.div>
+          )}
+
         </AnimatePresence>
       </main>
 
@@ -395,36 +432,36 @@ export default function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md overflow-y-auto"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto"
             id="report-inspect-modal-backdrop"
           >
             <motion.div
-              initial={{ scale: 0.95, y: 15 }}
+              initial={{ scale: 0.98, y: 10 }}
               animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.95, y: 15 }}
-              className="relative w-full max-w-3xl rounded-3xl bg-slate-900 border border-white/[0.08] shadow-2xl p-6.5 max-h-[90vh] overflow-y-auto"
+              exit={{ scale: 0.98, y: 10 }}
+              className="relative w-full max-w-3xl rounded-none bg-[#0a0a0a] border border-white/10 shadow-2xl p-8 max-h-[90vh] overflow-y-auto"
               id="report-inspect-modal-body"
             >
               
               {/* Close Button */}
               <button
                 onClick={() => setSelectedReport(null)}
-                className="absolute top-5 right-5 p-2 bg-slate-800 hover:bg-slate-700 hover:text-white rounded-xl transition-colors text-slate-400"
+                className="absolute top-5 right-5 p-2 bg-[#050505] border border-white/10 hover:border-white rounded-none transition-colors text-white"
                 id="close-modal-btn"
               >
-                <X className="h-5 w-5" />
+                <X className="h-4 w-4" />
               </button>
 
               {/* Title Header */}
-              <div className="border-b border-white/[0.08] pb-4 mb-5 text-left">
-                <span className="font-mono text-[9px] text-cyan-400 uppercase tracking-widest block">REPORT CERTIFICATE DETAIL</span>
-                <h2 className="font-display font-bold text-white text-lg mt-1">{selectedReport.title}</h2>
-                <div className="flex items-center gap-3 font-mono text-[10px] text-slate-500 mt-1.5">
+              <div className="border-b border-white/10 pb-4 mb-5 text-left font-mono">
+                <span className="text-[9px] text-white/40 block uppercase tracking-widest">REPORT CERTIFICATE DETAIL</span>
+                <h2 className="text-lg font-bold text-white mt-2 uppercase tracking-tight">{selectedReport.title}</h2>
+                <div className="flex items-center gap-3 text-[10px] text-white/40 mt-2">
                   <span>AUDIT CODES: {selectedReport.id}</span>
                   <span>•</span>
                   <span>DATE: {selectedReport.uploadDate}</span>
                   <span>•</span>
-                  <span className="text-cyan-400 font-semibold">{selectedReport.type}</span>
+                  <span className="text-white font-bold">{selectedReport.type}</span>
                 </div>
               </div>
 
@@ -433,75 +470,75 @@ export default function App() {
                 
                 {/* Left Side: Picture preview and executive wrap-up */}
                 <div className="space-y-4">
-                  <div className="aspect-video rounded-xl bg-slate-950 border border-white/[0.04] overflow-hidden relative">
+                  <div className="aspect-video rounded-none bg-[#050505] border border-white/5 overflow-hidden relative">
                     {selectedReport.imageUrl ? (
                       <img 
                         src={selectedReport.imageUrl} 
                         alt={selectedReport.title} 
-                        className="object-contain w-full h-full"
+                        className="object-contain w-full h-full grayscale opacity-80"
                       />
                     ) : (
-                      <div className="w-full h-full flex flex-col items-center justify-center text-slate-700">
-                        <FileText className="h-10 w-10 opacity-35" />
-                        <span className="text-[10px] font-mono mt-1">Snapshot archive only</span>
+                      <div className="w-full h-full flex flex-col items-center justify-center text-white/20">
+                        <FileText className="h-10 w-10" />
+                        <span className="text-[10px] font-mono mt-1 uppercase">Snapshot archive only</span>
                       </div>
                     )}
                   </div>
 
-                  <div className="p-3.5 bg-white/[0.01] rounded-xl border border-white/[0.04]">
-                    <span className="font-mono text-[9px] text-slate-500 block uppercase tracking-wide">Visual analysis transcript</span>
-                    <p className="font-sans text-[11px] text-slate-300 leading-relaxed mt-1.5">
+                  <div className="p-4 bg-[#050505] rounded-none border border-white/5 text-xs font-mono text-white/70 leading-relaxed">
+                    <span className="text-[9px] text-white/40 block uppercase tracking-widest">Visual analysis transcript</span>
+                    <p className="mt-2 font-sans">
                       {selectedReport.executiveSummary}
                     </p>
                   </div>
 
                   {/* Combined Score Cards in modal */}
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="border border-white/[0.05] rounded-xl p-3 bg-white/[0.01] text-center">
-                      <span className="font-mono text-[8px] text-slate-500 uppercase tracking-wider block">Safety Rating</span>
-                      <span className="text-emerald-400 font-display font-semibold text-lg block mt-0.5">{selectedReport.safetyScore}%</span>
+                  <div className="grid grid-cols-2 gap-3 font-mono">
+                    <div className="border border-white/10 rounded-none p-4 bg-[#050505] text-center">
+                      <span className="text-[8px] text-white/40 uppercase tracking-wider block">Safety Rating</span>
+                      <span className="text-white font-bold text-lg block mt-1">{selectedReport.safetyScore}%</span>
                     </div>
-                    <div className="border border-white/[0.05] rounded-xl p-3 bg-white/[0.01] text-center">
-                      <span className="font-mono text-[8px] text-slate-500 uppercase tracking-wider block">Yard Efficiency</span>
-                      <span className="text-indigo-400 font-display font-semibold text-lg block mt-0.5">{selectedReport.warehouseScore}%</span>
+                    <div className="border border-white/10 rounded-none p-4 bg-[#050505] text-center">
+                      <span className="text-[8px] text-white/40 uppercase tracking-wider block">Yard Efficiency</span>
+                      <span className="text-white font-bold text-lg block mt-1">{selectedReport.warehouseScore}%</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Right Side: Captured anomalies & optimizations */}
-                <div className="space-y-4 flex flex-col justify-between">
+                <div className="space-y-4 flex flex-col justify-between font-mono">
                   
                   {/* Issues block */}
                   <div className="space-y-3">
-                    <div className="flex items-center gap-1.5 text-xs font-semibold text-white border-b border-white/[0.04] pb-2">
-                      <AlertTriangle className="h-4.5 w-4.5 text-red-400" />
+                    <div className="flex items-center gap-1.5 text-[10px] font-bold text-white border-b border-white/5 pb-2">
+                      <AlertTriangle className="h-4.5 w-4.5 text-white/40" />
                       <span>SECTION 1: Detected Physical Hazards ({selectedReport.issues.length})</span>
                     </div>
 
                     {selectedReport.issues.length === 0 ? (
-                      <div className="p-3 text-[11px] font-mono text-emerald-400 bg-emerald-950/20 border border-emerald-500/20 rounded-xl flex items-center gap-1.5">
+                      <div className="p-3 text-[10px] text-emerald-400 bg-[#050505] border border-emerald-500/20 rounded-none flex items-center gap-1.5">
                         <CheckCircle2 className="h-4 w-4" /> 
                         <span>No physical blockages or stacking faults detected. Compliance approved.</span>
                       </div>
                     ) : (
-                      <div className="space-y-2.5 max-h-[180px] overflow-y-auto pr-1">
+                      <div className="space-y-2 max-h-[180px] overflow-y-auto pr-1">
                         {selectedReport.issues.map((i) => (
-                          <div key={i.id} className="p-2.5 rounded-lg bg-white/[0.01] border border-white/[0.04]">
+                          <div key={i.id} className="p-3 rounded-none bg-[#050505] border border-white/5">
                             <div className="flex items-center justify-between gap-1">
-                              <span className="font-sans text-[11px] font-bold text-white uppercase">{i.category}</span>
-                              <span className={`font-mono text-[8.5px] px-1.5 py-0.2 rounded ${
+                              <span className="text-[10px] font-bold text-white uppercase">{i.category}</span>
+                              <span className={`text-[8px] px-1.5 py-0.2 rounded-none border ${
                                 i.severity === "high" 
-                                  ? "bg-red-500/10 text-red-400 border border-red-500/20" 
+                                  ? "bg-red-500/10 text-red-400 border-red-500/20" 
                                   : i.severity === "medium"
-                                    ? "bg-amber-500/10 text-amber-400 border border-amber-500/20"
-                                    : "bg-cyan-500/10 text-cyan-400 border border-cyan-400/20"
+                                    ? "bg-amber-500/10 text-amber-400 border-amber-500/20"
+                                    : "bg-white/10 text-white/80 border-white/15"
                               }`}>
                                 {i.severity.toUpperCase()}
                               </span>
                             </div>
-                            <p className="font-sans text-[11px] text-slate-400 mt-1 leading-normal">{i.description}</p>
+                            <p className="font-sans text-[11px] text-white/60 mt-1.5 leading-relaxed">{i.description}</p>
                             {i.location && (
-                              <span className="font-mono text-[9px] text-slate-600 block mt-1">Location: {i.location}</span>
+                              <span className="text-[9px] text-white/40 block mt-1.5">Location: {i.location}</span>
                             )}
                           </div>
                         ))}
@@ -511,15 +548,15 @@ export default function App() {
 
                   {/* Recommendations block */}
                   <div className="space-y-2.5 pt-2">
-                    <div className="flex items-center gap-1.5 text-xs font-semibold text-white border-b border-white/[0.04] pb-2">
-                      <Activity className="h-4.5 w-4.5 text-cyan-400" />
+                    <div className="flex items-center gap-1.5 text-[10px] font-bold text-white border-b border-white/5 pb-2">
+                      <Activity className="h-4.5 w-4.5 text-white/40" />
                       <span>SECTION 2: Operational Directives</span>
                     </div>
                     <div className="space-y-2 max-h-[140px] overflow-y-auto pr-1">
                       {selectedReport.recommendations.map((rec, rIdx) => (
-                        <div key={rIdx} className="text-[11px] text-slate-300 leading-normal bg-white/[0.01] p-2 rounded-lg border border-white/[0.03] flex items-start gap-2">
-                          <span className="text-cyan-400 font-mono text-[10px] font-bold">#{rIdx + 1}</span>
-                          <p className="flex-1">{rec}</p>
+                        <div key={rIdx} className="text-[10px] text-white/80 leading-relaxed bg-[#050505] p-3 rounded-none border border-white/5 flex items-start gap-2">
+                          <span className="text-white font-bold">#{rIdx + 1}</span>
+                          <p className="flex-1 font-sans">{rec}</p>
                         </div>
                       ))}
                     </div>
@@ -530,10 +567,10 @@ export default function App() {
               </div>
 
               {/* Modal Trigger export action footer */}
-              <div className="border-t border-white/[0.08] pt-4.5 mt-6.5 flex items-center justify-between">
+              <div className="border-t border-white/10 pt-5 mt-6 flex items-center justify-between font-mono">
                 <button
                   onClick={() => setIsCompareSidebarOpen(true)}
-                  className="rounded-lg bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/20 py-2.5 px-4 text-xs font-semibold text-indigo-400 transition-all flex items-center gap-1.5"
+                  className="rounded-none bg-[#050505] border border-white/10 py-3 px-5 text-xs font-bold text-white hover:border-white transition-all flex items-center gap-1.5 uppercase"
                 >
                   <ArrowRightLeft className="h-4 w-4" /> Compare Baseline
                 </button>
@@ -543,16 +580,16 @@ export default function App() {
                       setSelectedReport(null);
                       setIsCompareSidebarOpen(false);
                     }}
-                    className="rounded-lg bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] py-2 px-4 text-xs font-semibold text-slate-300 transition-all"
+                    className="rounded-none bg-[#050505] border border-white/10 py-3 px-5 text-xs font-bold text-white hover:border-white transition-all uppercase"
                   >
-                    Dismiss Archive
+                    Dismiss
                   </button>
                   <button
                     onClick={() => generatePDFExport(selectedReport)}
-                    className="rounded-lg bg-cyan-500 py-2.5 px-4.5 text-xs font-bold text-slate-950 shadow-lg shadow-cyan-500/20 flex items-center gap-1.5 hover:scale-[1.01] transition-transform"
+                    className="rounded-none bg-white text-black border border-white py-3 px-5 text-xs font-bold hover:bg-black hover:text-white transition-colors flex items-center gap-1.5 uppercase"
                     id="inspect-modal-pdf-download-btn"
                   >
-                    <Download className="h-4 w-4" /> Export Signed PDF Certificate
+                    <Download className="h-4 w-4" /> Export PDF Certificate
                   </button>
                 </div>
               </div>

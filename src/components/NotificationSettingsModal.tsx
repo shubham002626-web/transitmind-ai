@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { X, Bell, Mail, AlertTriangle, ShieldAlert, Check } from "lucide-react";
+import { motion } from "motion/react";
+import { X, Bell, Mail, AlertTriangle, ShieldAlert, Check, CheckSquare, Square } from "lucide-react";
 import { NotificationService, NotificationPreferences } from "../services/notificationService";
 
 interface NotificationSettingsModalProps {
@@ -39,117 +39,133 @@ export default function NotificationSettingsModal({ isOpen, onClose, onShowToast
     setIsSaving(true);
     await NotificationService.updatePreferences(preferences);
     setIsSaving(false);
-    onShowToast("Notification preferences updated.");
+    onShowToast("NOTIFICATION PREFERENCES UPDATED.");
     onClose();
   };
 
   return (
-    <div className="fixed inset-0 z-[80] flex items-center justify-center p-4 font-sans">
+    <div className="fixed inset-0 z-[80] flex items-center justify-center p-4 font-mono">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/80 backdrop-blur-sm"
         onClick={onClose}
       />
 
       <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 10 }}
+        initial={{ opacity: 0, scale: 0.98, y: 10 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.95, y: 10 }}
-        className="relative w-full max-w-md bg-slate-900 border border-white/[0.1] rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+        exit={{ opacity: 0, scale: 0.98, y: 10 }}
+        className="relative w-full max-w-md bg-[#0a0a0a] border border-white/10 shadow-2xl flex flex-col overflow-hidden rounded-none"
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-5 border-b border-white/[0.05] bg-slate-950/40">
+        <div className="flex items-center justify-between p-5 border-b border-white/10 bg-[#050505]">
           <div className="flex items-center gap-3">
-            <div className="flex items-center justify-center h-8 w-8 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-400">
+            <div className="flex items-center justify-center h-8 w-8 rounded-none bg-white/5 border border-white/10 text-white">
               <Bell className="h-4 w-4" />
             </div>
-            <h2 className="text-lg font-bold text-white font-display">Notification Settings</h2>
+            <h2 className="text-xs font-bold text-white uppercase tracking-wider">Notification Ledger Settings</h2>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.05] transition-colors"
+            className="p-1.5 border border-white/10 text-white/50 hover:text-white hover:border-white transition-colors rounded-none"
           >
-            <X className="h-5 w-5" />
+            <X className="h-3.5 w-3.5" />
           </button>
         </div>
 
         {/* Content */}
-        <div className="p-6">
+        <div className="p-6 text-left">
           {isLoading ? (
             <div className="flex items-center justify-center py-10">
-              <div className="h-6 w-6 rounded-full border-2 border-cyan-500 border-t-transparent animate-spin"></div>
+              <div className="h-6 w-6 border-2 border-white border-t-transparent animate-spin rounded-none"></div>
             </div>
           ) : (
             <div className="space-y-6">
               
               <div className="space-y-4">
-                <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-500">Email Alerts</h3>
+                <h3 className="text-[10px] font-bold uppercase tracking-wider text-white/40">Email Alerts</h3>
                 
                 {/* Critical Risk Alert */}
-                <div className="flex items-start justify-between bg-white/[0.02] border border-white/[0.05] rounded-xl p-4">
+                <div className="flex items-start justify-between bg-[#050505] border border-white/5 p-4 rounded-none">
                   <div className="flex gap-3">
-                    <ShieldAlert className="h-4 w-4 text-red-400 mt-0.5" />
+                    <ShieldAlert className="h-4 w-4 text-white/60 mt-0.5" />
                     <div>
-                      <div className="text-sm font-semibold text-slate-200 leading-none">Critical Risk Detections</div>
-                      <div className="text-xs text-slate-400 mt-1.5">Immediate email notification when a critical safety or logistics anomaly is found.</div>
+                      <div className="text-xs font-bold text-white uppercase tracking-wider leading-none">Critical Risk Detections</div>
+                      <p className="text-[10px] text-white/40 mt-2 font-sans leading-relaxed">Immediate email notification when a critical safety or logistics anomaly is found.</p>
                     </div>
                   </div>
                   <button 
                     onClick={() => handleToggle('emailAlertsCritical')}
-                    className={`shrink-0 w-10 h-5 rounded-full transition-colors relative ${preferences.emailAlertsCritical ? 'bg-cyan-500' : 'bg-slate-700'}`}
+                    className="shrink-0 text-white/40 hover:text-white transition-colors ml-2"
                   >
-                    <div className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white transition-transform ${preferences.emailAlertsCritical ? 'translate-x-5' : 'translate-x-0'}`}></div>
+                    {preferences.emailAlertsCritical ? (
+                      <CheckSquare className="h-5 w-5 text-white" />
+                    ) : (
+                      <Square className="h-5 w-5" />
+                    )}
                   </button>
                 </div>
 
                 {/* High Risk Alert */}
-                <div className="flex items-start justify-between bg-white/[0.02] border border-white/[0.05] rounded-xl p-4">
+                <div className="flex items-start justify-between bg-[#050505] border border-white/5 p-4 rounded-none">
                   <div className="flex gap-3">
-                    <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5" />
+                    <AlertTriangle className="h-4 w-4 text-white/60 mt-0.5" />
                     <div>
-                      <div className="text-sm font-semibold text-slate-200 leading-none">High Risk Detections</div>
-                      <div className="text-xs text-slate-400 mt-1.5">Email alerts for systemic issues flagged as high risk.</div>
+                      <div className="text-xs font-bold text-white uppercase tracking-wider leading-none">High Risk Detections</div>
+                      <p className="text-[10px] text-white/40 mt-2 font-sans leading-relaxed">Email alerts for systemic issues flagged as high risk.</p>
                     </div>
                   </div>
                   <button 
                     onClick={() => handleToggle('emailAlertsHigh')}
-                    className={`shrink-0 w-10 h-5 rounded-full transition-colors relative ${preferences.emailAlertsHigh ? 'bg-cyan-500' : 'bg-slate-700'}`}
+                    className="shrink-0 text-white/40 hover:text-white transition-colors ml-2"
                   >
-                    <div className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white transition-transform ${preferences.emailAlertsHigh ? 'translate-x-5' : 'translate-x-0'}`}></div>
+                    {preferences.emailAlertsHigh ? (
+                      <CheckSquare className="h-5 w-5 text-white" />
+                    ) : (
+                      <Square className="h-5 w-5" />
+                    )}
                   </button>
                 </div>
               </div>
 
-              <div className="space-y-4">
-                <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-500">General</h3>
+              <div className="space-y-4 pt-2 border-t border-white/5">
+                <h3 className="text-[10px] font-bold uppercase tracking-wider text-white/40">General</h3>
                 
                 {/* Daily Digest */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Mail className="h-4 w-4 text-slate-400" />
-                    <span className="text-sm text-slate-300">Daily Operations Digest</span>
+                    <Mail className="h-4 w-4 text-white/60" />
+                    <span className="text-xs text-white/80 uppercase">Daily Operations Digest</span>
                   </div>
                   <button 
                     onClick={() => handleToggle('dailyDigest')}
-                    className={`w-9 h-4.5 rounded-full transition-colors relative ${preferences.dailyDigest ? 'bg-emerald-500' : 'bg-slate-700'}`}
+                    className="text-white/40 hover:text-white transition-colors"
                   >
-                    <div className={`absolute top-0.5 left-0.5 w-3.5 h-3.5 rounded-full bg-white transition-transform ${preferences.dailyDigest ? 'translate-x-4.5' : 'translate-x-0'}`}></div>
+                    {preferences.dailyDigest ? (
+                      <CheckSquare className="h-5 w-5 text-white" />
+                    ) : (
+                      <Square className="h-5 w-5" />
+                    )}
                   </button>
                 </div>
 
                 {/* In-App Notifications */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Bell className="h-4 w-4 text-slate-400" />
-                    <span className="text-sm text-slate-300">In-App Event Toasts</span>
+                    <Bell className="h-4 w-4 text-white/60" />
+                    <span className="text-xs text-white/80 uppercase">In-App Event Toasts</span>
                   </div>
                   <button 
                     onClick={() => handleToggle('inAppNotifications')}
-                    className={`w-9 h-4.5 rounded-full transition-colors relative ${preferences.inAppNotifications ? 'bg-emerald-500' : 'bg-slate-700'}`}
+                    className="text-white/40 hover:text-white transition-colors"
                   >
-                    <div className={`absolute top-0.5 left-0.5 w-3.5 h-3.5 rounded-full bg-white transition-transform ${preferences.inAppNotifications ? 'translate-x-4.5' : 'translate-x-0'}`}></div>
+                    {preferences.inAppNotifications ? (
+                      <CheckSquare className="h-5 w-5 text-white" />
+                    ) : (
+                      <Square className="h-5 w-5" />
+                    )}
                   </button>
                 </div>
               </div>
@@ -159,10 +175,10 @@ export default function NotificationSettingsModal({ isOpen, onClose, onShowToast
         </div>
 
         {/* Footer */}
-        <div className="p-5 border-t border-white/[0.05] bg-slate-950/40 flex justify-end gap-3">
+        <div className="p-5 border-t border-white/10 bg-[#050505] flex justify-end gap-3 font-mono">
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-lg text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/[0.05] transition-colors"
+            className="px-4 py-2 border border-white/10 text-xs font-bold text-white hover:border-white transition-colors rounded-none uppercase"
             disabled={isSaving}
           >
             Cancel
@@ -170,10 +186,10 @@ export default function NotificationSettingsModal({ isOpen, onClose, onShowToast
           <button
             onClick={handleSave}
             disabled={isSaving || isLoading}
-            className="px-5 py-2 rounded-lg bg-cyan-500 text-slate-950 text-sm font-bold flex items-center gap-2 hover:bg-cyan-400 transition-colors disabled:opacity-50"
+            className="px-5 py-2 bg-white text-black border border-white text-xs font-bold flex items-center gap-2 hover:bg-black hover:text-white transition-colors rounded-none uppercase"
           >
             {isSaving ? (
-              <div className="h-3 w-3 rounded-full border-2 border-slate-950 border-t-transparent animate-spin"></div>
+              <div className="h-3.5 w-3.5 border-2 border-black border-t-transparent animate-spin rounded-none"></div>
             ) : (
               <Check className="h-4 w-4" />
             )}
